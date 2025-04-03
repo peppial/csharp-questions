@@ -5,7 +5,7 @@
 
 
 <p><div align="center">This repo is created similary to Lydia Hallie famous repo
-  <a href="https://www.instagram.com/theavocoder">javascript-questions</a>.</div><div align="center">Credits to her for the great idea and hard work! :heart:</div>
+  <a href="https://github.com/lydiahallie/javascript-questions">javascript-questions</a>.</div><div align="center">Credits to her for the great idea and hard work! :heart:</div>
 </p>
 
 
