@@ -39,3 +39,42 @@ In C#, method overloading is based on compile-time types. While dynamic behaves 
 Since method overloading does not allow two methods with identical signatures (same method name and parameter types), the  <b>compiler does not allow this code to compile</b>.
 
 </p>
+</details>
+
+---
+###### 2. What's the output?
+
+```csharp
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = [ 1, 2, 3 ];
+        ModifyArray(numbers);
+        
+        Console.WriteLine(numbers == null ? "Array is null" : $"Array is not null, Length: {numbers.Length}");
+    }
+
+    static void ModifyArray(int[] arr)
+    {
+        arr = null;
+    }
+}
+```
+
+- A: Array is not null, Length: 3
+- B: Array is not null, Length: 0
+- C: Array is null
+- D: Not all code paths return a value
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+In C#, method parameters are passed by value by default — even when the parameter is a reference type like an array.
+
+When you call ModifyArray(numbers); the value of the reference (a pointer to the array in memory) is copied into the method parameter arr.
+So now, inside the method: <b>arr is a copy of the reference</b> to the original array numbers.
+If you do arr = null;, you're only modifying the copy, not the original. The original numbers in Main() remains untouched.
+
+</p>
