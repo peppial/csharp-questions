@@ -72,7 +72,7 @@ class Program
 
 #### Answer: A
 In C#, method parameters are passed by value by default. 
-For reference types (like classes and arrays), the reference itself is passed by value - meaning the method receives a copy of the reference, not the original reference. However, both references point to the same object in memory, so changes to the object's properties within the method will be visible outside the method.
+For reference types (like classes and arrays), the reference itself is passed by value - meaning <b>the method receives a copy of the reference</b>, not the original reference. However, both references point to the same object in memory, so changes to the object's properties within the method will be visible outside the method.
 
 When you call ModifyArray(numbers); the value of the reference (a pointer to the array in memory) is copied into the method parameter arr.
 So now, inside the method: <b>arr is a copy of the reference</b> to the original array numbers.
