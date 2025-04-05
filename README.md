@@ -79,3 +79,42 @@ So now, inside the method: <b>arr is a copy of the reference</b> to the original
 If you do arr = null;, you're only modifying the copy, not the original. The original numbers in Main() remains untouched.
 
 </p>
+
+---
+###### 3. What's the output?
+
+```csharp
+class Program
+{
+    static async Task Main()
+    {
+        DoWorkAsync();
+    }
+    
+    static object _lock = new object();
+    static async Task DoWorkAsync()
+    {
+        lock (_lock)
+        {
+            Console.WriteLine("Entered lock");
+            await Task.Delay(1000); 
+            Console.WriteLine("Leaving lock");
+        }
+    }
+}
+```
+
+- A: Entered lock, Leaving lock
+- B: A deadlock
+- C: No output
+- D: Cannot await in the body of a lock statement
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+When you await inside a lock, you risk not releasing the lock immediately.
+When the method resumes, it might do so on a different thread that didn’t acquire the lock originally, violating the Monitor’s rules.
+This is why the compiler doesn't even let you do it. It throws an error to protect you from unsafe behaivour.
+Instead, you should use SemaphoreSlim.
+</p>
