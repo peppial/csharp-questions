@@ -115,9 +115,10 @@ class Program
 
 #### Answer: D
 When you await inside a lock, you risk not releasing the lock immediately.
-When the method resumes, it might do so on a different thread that didn’t acquire the lock originally, violating the Monitor’s rules.
+When the method resumes, it might do so on a <b>different thread</b> that didn’t acquire the lock originally, violating the Monitor’s rules.
 This is why the compiler doesn't even let you do it. It throws an error to protect you from unsafe behaivour.
-Instead, you should use SemaphoreSlim.
+
+Instead, you should use <b>SemaphoreSlim</b>.
 </p>
 </details>
 
