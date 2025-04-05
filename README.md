@@ -87,12 +87,13 @@ If you do arr = null;, you're only modifying the copy, not the original. The ori
 ```csharp
 class Program
 {
+    static object _lock = new object();
+
     static async Task Main()
     {
         DoWorkAsync();
     }
     
-    static object _lock = new object();
     static async Task DoWorkAsync()
     {
         lock (_lock)
