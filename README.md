@@ -79,6 +79,7 @@ So now, inside the method: <b>arr is a copy of the reference</b> to the original
 If you do arr = null;, you're only modifying the copy, not the original. The original numbers in Main() remains untouched.
 
 </p>
+</details>
 
 ---
 ###### 3. What's the output?
@@ -118,3 +119,5 @@ When the method resumes, it might do so on a different thread that didn’t acqu
 This is why the compiler doesn't even let you do it. It throws an error to protect you from unsafe behaivour.
 Instead, you should use SemaphoreSlim.
 </p>
+</details>
+
