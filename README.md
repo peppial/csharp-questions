@@ -123,3 +123,57 @@ Instead, you should use <b>SemaphoreSlim</b>.
 </p>
 </details>
 
+---
+###### 4. What's the output?
+
+```csharp
+class Program
+{
+    static void Main()
+    {
+        List<Action> actions = new List<Action>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            Action a = () => Console.WriteLine($"Lambda captured: {i}");
+            actions.Add(a);
+        }
+
+        foreach (var action in actions)
+        {
+            action();
+        }
+    }
+}
+```
+
+- A: Lambda captured: 0
+     Lambda captured: 1
+     Lambda captured: 2
+- B: Lambda captured: 3
+     Lambda captured: 3
+     Lambda captured: 3
+- C: Lambda captured: 2
+     Lambda captured: 2
+     Lambda captured: 2
+- D: Compiler error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+Each lambda is capturing the variable i, not its value. The variable i is declared outside the lambda, and the lambda holds a reference to it.
+When the foreach runs the lambdas, the loop has already finished — and i == 3. So, the lambdas don’t capture 0, 1, 2 — they all reference the same variable, and its final value is 3.
+
+To fix it introduce a variable in the loop:
+
+```csharp
+for (int i = 0; i < 3; i++)
+{
+    int copy = i; // 👈 new variable per iteration
+    actions.Add(() => Console.WriteLine($"Lambda captured: {copy}"));
+}
+```
+
+</p>
+</details>
