@@ -177,3 +177,40 @@ for (int i = 0; i < 3; i++)
 
 </p>
 </details>
+
+
+---
+###### 5. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        SomethingAsync();
+        Console.WriteLine("Hello World!");
+    }
+
+    static async void SomethingAsync()
+    {
+        await Task.Delay(1000);
+        throw new Exception("Exception");
+    }
+}
+```
+
+- A: The application crashes
+- B: Hello World!
+- C: Compiler error
+- D: Hello World! and the application crashes.
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+When you call an async void method, it behaves like fire-and-forget. Control immediately returns to the caller — in this case, back to Main() — without waiting for the await to finish. Meanwhile, the await Task.Delay(1000) delays execution for 1 second. 
+After that delay, the exception should be thrown — but by that time, Main has already printed the message and the application has exited.
+
+</p>
+</details>
