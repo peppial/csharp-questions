@@ -214,3 +214,48 @@ After that delay, the exception should be thrown — but by that time, Main has 
 
 </p>
 </details>
+
+
+---
+###### 6. What's the output?
+
+```csharp
+
+class Program
+{
+    static async Task Main()
+    {
+        try
+        {
+            var task = ThrowingMethodAsync();
+            Console.WriteLine("Task started, waiting for it to complete...");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Caught: {ex.Message}");
+        }
+    }
+
+    static async Task ThrowingMethodAsync()
+    {
+        await Task.Delay(1000);
+        throw new InvalidOperationException("Something went wrong");
+    }
+}
+```
+
+- A: Task started, waiting for it to complete...
+     Something went wrong
+- B: Something went wrong
+- C: Task started, waiting for it to complete...
+- D: The application crashes
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+Because the async Task method runs in the background (it is not awaited) the Main method finishes immediately after the Console.WriteLine.
+Since the exception is thrown after Main is already done, it has no place to be caught, and the try-catch block around the var task = ... line is useless.
+
+</p>
+</details>
