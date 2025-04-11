@@ -291,13 +291,13 @@ class Program
 
 ```
 
-- A: 1, 2, 3
+- A: <br>1, 2, 3<br>
      1, 2, 3
-- B: 1, 2, 3
+- B: <br>1, 2, 3<br>
      0, 0, 0
-- C: 99, 2, 3
+- C: <br>99, 2, 3<br>
      0, 0, 0
-- D: 99, 2, 3
+- D: <br>99, 2, 3<br>
      99, 2, 3
 
 <details><summary><b>Answer</b></summary>
