@@ -259,3 +259,53 @@ Since the exception is thrown after Main is already done, it has no place to be 
 
 </p>
 </details>
+
+---
+###### 7. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = [ 1, 2, 3 ];
+
+        ModifyArray(numbers);
+        Console.WriteLine(string.Join(", ", numbers));
+
+        ResetArray(numbers);
+        Console.WriteLine(string.Join(", ", numbers));
+    }
+
+    static void ModifyArray(int[] arr)
+    {
+        arr[0] = 99;
+    }
+
+    static void ResetArray(int[] arr)
+    {
+        arr = [0,0,0];
+    }
+}
+
+```
+
+- A: 1, 2, 3
+     1, 2, 3
+- B: 1, 2, 3
+     0, 0, 0
+- C: 99, 2, 3
+     0, 0, 0
+- D: 99, 2, 3
+     99, 2, 3
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+In ResetArray, arr is a copy of the reference to numbers.
+When we assign arr = [ 0, 0, 0 ], we are changing the local variable arr to point to a new array. But this change <b>is not visible to the caller</b>. The original numbers array is unchanged. So numbers still points to the array with values: 99, 2, 3.
+
+</p>
+</details>
