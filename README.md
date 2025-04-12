@@ -333,33 +333,36 @@ class Program
 
 ```
 
-- A: <br>True<br>   
-     False<br> 
+- A:    
+     True   
+     False   
      False
-- B: <br>True<br>   
-     True<br> 
+- B:    
+     True   
+     True   
      True
-- C: <br>False<br>   
-     False<br> 
+- C:    
+     False   
+     False   
      False
-- D: <br>True<br>   
-     True<br> 
+- D:    
+     True   
+     True   
      False
 
 <details><summary><b>Answer</b></summary>
 <p>
 
 #### Answer: A
-string a = "hello"; this is a string literal, so it's interned — stored in the intern pool.
-a points to that interned string.
+string a = "hello"; this is a string literal, so it's interned — stored in the intern pool. a points to that interned string.   
 string b = "he" + "llo";
-Both parts are string literals. Same interned string as a.
+Both parts are string literals. Same interned string as a.   
 string c = string.Concat("he", "llo");
 This is evaluated at runtime. Even though the value is "hello", the result is not interned automatically.
-So c refers to a new string instance with the same content
+So c refers to a new string instance with the same content.   
 string d = new string("hello".ToCharArray());
 This explicitly creates a new string object using a char[].
-It will never refer to the interned version unless you manually intern it using string.Intern()
+It will never refer to the interned version unless you manually intern it using string.Intern().
 
 </p>
 </details>
