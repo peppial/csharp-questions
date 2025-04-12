@@ -309,3 +309,57 @@ When we assign arr = [ 0, 0, 0 ], we are changing the local variable arr to poin
 
 </p>
 </details>
+
+
+---
+###### 8. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        string a = "hello";
+        string b = "he" + "llo";
+        string c = string.Concat("he", "llo");
+        string d = new string("hello".ToCharArray());
+
+        Console.WriteLine(object.ReferenceEquals(a, b));
+        Console.WriteLine(object.ReferenceEquals(a, c));
+        Console.WriteLine(object.ReferenceEquals(a, d));
+    }
+}
+
+```
+
+- A: <br>True<br>   
+     False<br> 
+     False
+- B: <br>True<br>   
+     True<br> 
+     True
+- C: <br>False<br>   
+     False<br> 
+     False
+- D: <br>True<br>   
+     True<br> 
+     False
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+string a = "hello"; this is a string literal, so it's interned — stored in the intern pool.
+a points to that interned string.
+string b = "he" + "llo";
+Both parts are string literals. Same interned string as a.
+string c = string.Concat("he", "llo");
+This is evaluated at runtime. Even though the value is "hello", the result is not interned automatically.
+So c refers to a new string instance with the same content
+string d = new string("hello".ToCharArray());
+This explicitly creates a new string object using a char[].
+It will never refer to the interned version unless you manually intern it using string.Intern()
+
+</p>
+</details>
