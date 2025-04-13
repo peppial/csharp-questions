@@ -418,10 +418,10 @@ class Program
 
 #### Answer: B
 
-True     // a and b point to the same reference  
-True     // a and c are both interned "hello"  
-True     // a and d have same content (== is overridden)  
-True     // Equals() checks content equality  
+True     -  a and b point to the same reference  
+True     -  a and c are both interned "hello"  
+True     -  a and d have same content (== is overridden)  
+True     -  Equals() checks content equality  
 
 
 </p>
