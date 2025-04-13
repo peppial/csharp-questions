@@ -385,7 +385,6 @@ class Program
 
         Console.WriteLine(object.ReferenceEquals(a, b));
         Console.WriteLine(object.ReferenceEquals(a, c));
-        Console.WriteLine(object.ReferenceEquals(a, d));
         Console.WriteLine(a == d);
         Console.WriteLine(a.Equals(d));
     }
@@ -394,22 +393,22 @@ class Program
 ```
 
 - A:    
-    True
+    True  
     False  
     True  
     True
 - B:    
-    True
+    True  
     True  
     True  
     True
 - C:    
-    True
+    True  
     True  
     True  
     False
 - D:    
-    False
+    False  
     False  
     True  
     True
