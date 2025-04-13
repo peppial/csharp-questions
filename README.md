@@ -366,3 +366,64 @@ It will never refer to the interned version unless you manually intern it using 
 
 </p>
 </details>
+
+
+
+---
+###### 9. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        string a = "hello";
+        string b = a;
+        string c = "hello";
+        string d = new string("hello".ToCharArray());
+
+        Console.WriteLine(object.ReferenceEquals(a, b));
+        Console.WriteLine(object.ReferenceEquals(a, c));
+        Console.WriteLine(object.ReferenceEquals(a, d));
+        Console.WriteLine(a == d);
+        Console.WriteLine(a.Equals(d));
+    }
+}
+
+```
+
+- A:    
+    True
+    False  
+    True  
+    True
+- B:    
+    True
+    True  
+    True  
+    True
+- C:    
+    True
+    True  
+    True  
+    False
+- D:    
+    False
+    False  
+    True  
+    True
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+
+True     // a and b point to the same reference  
+True     // a and c are both interned "hello"  
+True     // a and d have same content (== is overridden)  
+True     // Equals() checks content equality  
+
+
+</p>
+</details>
