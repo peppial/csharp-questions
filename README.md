@@ -426,3 +426,40 @@ True     -  Equals() checks content equality
 
 </p>
 </details>
+
+
+---
+###### 10. What's the output?
+
+```csharp
+
+class Program
+{   
+    private static int a = b;
+    private static int b = 10;
+
+    static void Main()
+    {
+        Console.WriteLine(a);
+    }
+}
+
+```
+
+- A: 10
+- B: Use of unassigned local variable 'b'
+- C: Runtime Error
+- D: 0
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+
+Static fields in C# are initialized in the order they are declared in the class, not in the order of their references in the code. 
+a is declared first, and it is initialized with the value of b. 
+However, b is declared after a, and its default value is 0 (because it's an int and the default value for int is 0).
+
+
+</p>
+</details>
