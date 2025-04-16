@@ -463,3 +463,58 @@ However, b is declared after a, and its default value is 0 (because it's an int 
 
 </p>
 </details>
+
+
+---
+###### 11. What's the output?
+
+```csharp
+
+using System;
+using System.Threading.Tasks;
+
+class Counter
+{
+    public static int Count = 0;
+
+    public static void Increment()
+    {
+        for (int i = 0; i < 1_000_000; i++)
+        {
+            Count++;
+        }
+    }
+}
+
+class Program
+{
+    static async Task Main()
+    {
+        var task1 = Task.Run(() => Counter.Increment());
+        var task2 = Task.Run(() => Counter.Increment());
+
+        await Task.WhenAll(task1, task2);
+
+        Console.WriteLine($"Final Count: {Counter.Count}");
+    }
+}
+
+
+```
+
+- A: Final Count: 1000000
+- B: Final Count: 2000000
+- C: More than 2000000
+- D: Less than 2000000
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+
+The Count++ operation is not thread-safe, as it involves a read-modify-write sequence that can be interrupted by other threads.  
+Since both tasks run concurrently, increments may overlap, leading to lost updates and a final count less than 2000000. This happens because the static field is shared across threads, and no synchronization (like Interlocked or lock) is used.
+
+
+</p>
+</details>
