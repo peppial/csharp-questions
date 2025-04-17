@@ -470,9 +470,6 @@ However, b is declared after a, and its default value is 0 (because it's an int 
 
 ```csharp
 
-using System;
-using System.Threading.Tasks;
-
 class Counter
 {
     public static int Count = 0;
@@ -514,6 +511,55 @@ class Program
 
 The Count++ operation is not thread-safe, as it involves a read-modify-write sequence that can be interrupted by other threads.  
 Since both tasks run concurrently, increments may overlap, leading to lost updates and a final count less than 2000000. This happens because the static field is shared across threads, and no synchronization (like Interlocked or lock) is used.
+
+
+</p>
+</details>
+
+
+
+---
+###### 12. What's the output?
+
+```csharp
+
+class Program
+{
+    static async Task Main()
+    {
+        try
+        {
+            ThrowingTask();
+            Console.WriteLine("Main continues...");
+            await Task.Delay(2000);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Caught: {ex.Message}");
+        }
+    }
+
+    static async Task ThrowingTask()
+    {
+        await Task.Delay(500);
+        throw new InvalidOperationException("Boom!");
+    }
+}
+
+
+```
+
+- A: Main continues.. Caught: Boom!
+- B: Main continues..
+- C: No output
+- D: Main continues.. Application crashes
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+
+The exception in ThrowingTask is thrown on a background thread, but since the task is <b>not awaited</b>, the exception is never observed by the Main method’s try-catch. Unobserved task exceptions can crash the application or be silently ignored, depending on the runtime and .NET version. This is why fire-and-forget tasks should be avoided unless properly handled, e.g., with logging or exception capturing.
 
 
 </p>
