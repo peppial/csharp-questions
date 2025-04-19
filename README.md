@@ -333,22 +333,11 @@ class Program
 
 ```
 
-- A:    
-     True   
-     False   
-     False
-- B:    
-     True   
-     True   
-     True
-- C:    
-     False   
-     False   
-     False
-- D:    
-     True   
-     True   
-     False
+- A: True, False, False
+- B: True, True, True
+- C: False, False, False
+- D: True, True, False
+
 
 <details><summary><b>Answer</b></summary>
 <p>
