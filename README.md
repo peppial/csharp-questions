@@ -381,26 +381,11 @@ class Program
 
 ```
 
-- A:    
-    True  
-    False  
-    True  
-    True
-- B:    
-    True  
-    True  
-    True  
-    True
-- C:    
-    True  
-    True  
-    True  
-    False
-- D:    
-    False  
-    False  
-    True  
-    True
+- A: True, False, True, True
+- B: True, True, True, True
+- C: True, True, True, False 
+- D: False, False, True, True
+
 
 <details><summary><b>Answer</b></summary>
 <p>
