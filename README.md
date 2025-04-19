@@ -564,3 +564,40 @@ The exception in ThrowingTask is thrown on a background thread, but since the ta
 
 </p>
 </details>
+
+
+---
+###### 13. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = [ 1, 2, 3, 4, 5 ];
+        Span<int> slice = numbers.AsSpan(1, 3);
+
+        for (int i = 0; i < slice.Length; i++)
+        {
+            slice[i] *= 2;
+        }
+
+        Console.WriteLine(string.Join(", ", numbers));
+    }
+}
+
+```
+
+- A: 2, 4, 6, 4, 5
+- B: 1, 4, 6, 8, 5
+- C: 1, 2, 3, 4, 5
+- D: Compile-time error: cannot slice an array with Span
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+Span<T> provides a <b>view</b> over the original memory, not a copy. In this case, numbers.AsSpan(1, 3) creates a span covering elements at index 1 to 3 (values 2, 3, 4), and the loop doubles those values in-place. Because Span<T> directly references the original array memory, any changes to it reflect in the original array, making it both efficient and safe for high-performance scenarios without additional allocations.
+</p>
+</details>
