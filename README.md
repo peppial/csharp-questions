@@ -575,3 +575,46 @@ class Program
 Span<T> provides a <b>view</b> over the original memory, not a copy. In this case, numbers.AsSpan(1, 3) creates a span covering elements at index 1 to 3 (values 2, 3, 4), and the loop doubles those values in-place. Because Span<T> directly references the original array memory, any changes to it reflect in the original array, making it both efficient and safe for high-performance scenarios without additional allocations.
 </p>
 </details>
+
+
+---
+###### 14. What's the output?
+
+```csharp
+
+class Base
+{
+    public virtual void Show() => Console.WriteLine("Base.Show");
+}
+
+class Derived : Base
+{
+    public void Show() => Console.WriteLine("Derived.Show");
+}
+
+class Program
+{
+    static void Main()
+    {
+        Base obj = new Derived();
+        obj.Show();
+    }
+}
+
+```
+
+- A: Runtime error
+- B: Derived.Show
+- C: No Output
+- D: Base.Show
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+Base declares a virtual method Show().
+Derived hides (not overrides!) the Show() method by declaring public void Show() without using the override keyword.
+At runtime, you're calling obj.Show() where obj is of type Base — and since method hiding (via new) is resolved by the compile-time type, Base.Show() is called, not Derived.Show().
+
+To get polymorphic behavior (Derived.Show()), the method in Derived must be marked with override. Otherwise, it hides the base method, and calls are resolved by the reference type — not the instance type.</p>
+</details>
