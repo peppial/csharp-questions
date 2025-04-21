@@ -663,8 +663,8 @@ class Program
 <p>
 
 #### Answer: A
-Derived.WhoAmI() calls the static method defined in Derived, which hides the one in Base, so it prints "Derived.Static".
-Base.WhoAmI() calls the static method from Base, because static methods are resolved at compile time based on the reference type, not the runtime object type.
-Both d.Identify() and b.Identify() call the overridden Identify method from Derived, because instance virtual methods are resolved at runtime based on the actual object type (Derived), so both print "Derived.Instance".
+Derived.WhoAmI() calls the static method defined in Derived, which hides the one in Base, so it prints "Derived.Static".  
+Base.WhoAmI() calls the static method from Base, because <b>static methods are resolved at compile time based on the reference type</b>, not the runtime object type.  
+Both d.Identify() and b.Identify() call the <b>overridden</b> Identify method from Derived, because instance virtual methods are resolved at runtime based on the actual object type (Derived), so both print "Derived.Instance".
 </p>
 </details>
