@@ -618,3 +618,53 @@ At runtime, you're calling obj.Show() where obj is of type Base — and since me
 
 To get polymorphic behavior (Derived.Show()), the method in Derived must be marked with override. Otherwise, it hides the base method, and calls are resolved by the reference type — not the instance type.</p>
 </details>
+
+
+
+---
+###### 15. What's the output?
+
+```csharp
+
+class Base
+{
+    public static void WhoAmI() => Console.WriteLine("Base.Static");
+    public virtual void Identify() => Console.WriteLine("Base.Instance");
+}
+
+class Derived : Base
+{
+    public new static void WhoAmI() => Console.WriteLine("Derived.Static");
+    public override void Identify() => Console.WriteLine("Derived.Instance");
+}
+
+class Program
+{
+    static void Main()
+    {
+        Derived d = new Derived();
+        Base b = d;
+
+        Derived.WhoAmI();
+        Base.WhoAmI();
+        d.Identify();
+        b.Identify();
+    }
+}
+
+```
+
+- A: Derived.Static Base.Static Derived.Instance Derived.Instance
+- B: Base.Static Base.Static Derived.Instance Derived.Instance
+- C: Derived.Static Base.Static Base.Instance Derived.Instance
+- D: Compiler error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+Derived.WhoAmI() calls the static method defined in Derived, which hides the one in Base, so it prints "Derived.Static".
+Base.WhoAmI() calls the static method from Base, because static methods are resolved at compile time based on the reference type, not the runtime object type.
+Both d.Identify() and b.Identify() call the overridden Identify method from Derived, because instance virtual methods are resolved at runtime based on the actual object type (Derived), so both print "Derived.Instance".
+</p>
+</details>
