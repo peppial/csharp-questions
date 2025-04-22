@@ -723,11 +723,11 @@ Field Initialization
 Instance Base  
 Instance Derived
 
-- B: Static Derived
-Field Initialization
-Static Base
-Instance Base
-Instance Derived
+- B: Static Derived  
+Field Initialization  
+Static Base  
+Instance Base  
+Instance Derived  
 
 - C: Static Base  
 Field Initialization  
