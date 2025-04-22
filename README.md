@@ -668,3 +668,86 @@ Base.WhoAmI() calls the static method from Base, because <b>static methods are r
 Both d.Identify() and b.Identify() call the <b>overridden</b> Identify method from Derived, because instance virtual methods are resolved at runtime based on the actual object type (Derived), so both print "Derived.Instance".
 </p>
 </details>
+
+
+---
+###### 16. What's the output?
+
+```csharp
+
+class Base
+{
+    static Base()
+    {
+        Console.WriteLine("Static Base");
+    }
+    public Base()
+    {
+        Console.WriteLine("Instance Base");
+    }
+}
+
+class Derived : Base
+{
+    private readonly string msg = PrintMsg();
+
+    static Derived()
+    {
+        Console.WriteLine("Static Derived");
+    }
+    public Derived()
+    {
+        Console.WriteLine("Instance Derived");
+    }
+    private static string PrintMsg()
+    {
+        Console.WriteLine("Field Initialization");
+        return "Done";
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Derived d = new Derived();
+    }
+}
+
+
+```
+
+- A: Static Derived  
+Static Base  
+Field Initialization  
+Instance Base  
+Instance Derived
+
+- B: Static Derived
+Field Initialization
+Static Base
+Instance Base
+Instance Derived
+
+- C: Static Base  
+Field Initialization  
+Static Derived  
+Instance Base  
+Instance Derived
+
+- D: Field Initialization  
+Static Base  
+Static Derived  
+Instance Base  
+Instance Derived
+
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+Derived's static constructor runs first because it's the first type used in Main, even though it's a derived class — static constructors are triggered based on usage, not inheritance chain.
+The instance field msg in Derived is initialized before the base constructor runs, so "Field Initialization" is printed next.
+After that, Base's static constructor runs, followed by its instance constructor, and finally Derived's instance constructor. Base class instance constructors are <b>always called</b? before derived class constructors.
+</p>
+</details>
