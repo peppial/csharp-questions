@@ -748,6 +748,6 @@ Instance Derived
 #### Answer: B
 Derived's static constructor runs first because it's the first type used in Main, even though it's a derived class — static constructors are triggered based on usage, not inheritance chain.
 The instance field msg in Derived is initialized before the base constructor runs, so "Field Initialization" is printed next.
-After that, Base's static constructor runs, followed by its instance constructor, and finally Derived's instance constructor. Base class instance constructors are <b>always called</b? before derived class constructors.
+After that, Base's static constructor runs, followed by its instance constructor, and finally Derived's instance constructor. Base class instance constructors are <b>always called</b> before derived class constructors.
 </p>
 </details>
