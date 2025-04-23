@@ -751,3 +751,41 @@ The instance field msg in Derived is initialized before the base constructor run
 After that, Base's static constructor runs, followed by its instance constructor, and finally Derived's instance constructor. Base class instance constructors are <b>always called</b> before derived class constructors.
 </p>
 </details>
+
+
+
+---
+###### 17. What's the output?
+
+```csharp
+
+struct S { }
+
+class Program
+{
+    static void Main()
+    {
+        S s = new S();
+        object o1 = s;
+        object o2 = s;
+        Console.WriteLine(object.ReferenceEquals(o1, o2));
+    }
+}
+
+```
+
+- A: True
+- B: False
+- C: Runtime exception
+- D: Compiler error
+
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+S is a value type (a struct), and when you assign it to object, <b>boxing</b> occurs — meaning the value is copied into a new object on the heap.
+When you do object o1 = s; and then object o2 = s;, each boxing operation creates a new boxed copy of the value. 
+So o1 and o2 refer to different objects, even though they hold the same value — and therefore, object.ReferenceEquals(o1, o2) returns false.
+</p>
+</details>
