@@ -789,3 +789,47 @@ When you do object o1 = s; and then object o2 = s;, each boxing operation create
 So o1 and o2 refer to different objects, even though they hold the same value — and therefore, object.ReferenceEquals(o1, o2) returns false.
 </p>
 </details>
+
+
+---
+###### 18. What's the output?
+
+```csharp
+
+public class A { }
+
+public static class Extensions
+{
+    public static void Foo(this A a) => Console.WriteLine("Extension");
+}
+
+public class B : A
+{
+    public void Foo() => Console.WriteLine("Instance");
+}
+
+class Program
+{
+    static void Main()
+    {
+        A obj = new B();
+        obj.Foo();
+    }
+}
+
+```
+
+- A: Compiler error
+- B: Extension
+- C: Instance
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+B defines an instance method Foo(), but obj is declared as type A, and A does not have a method called Foo().
+Since A has no Foo() instance method, the compiler uses the extension method defined in Extensions.
+Even though obj is actually a B at runtime, method resolution for extension methods is static, based on the compile-time type (A), not the runtime type (B). So Extension is printed.
+</p>
+</details>
