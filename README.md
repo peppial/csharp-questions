@@ -833,3 +833,50 @@ Since A has no Foo() instance method, the compiler uses the extension method def
 Even though obj is actually a B at runtime, method resolution for extension methods is static, based on the compile-time type (A), not the runtime type (B). So Extension is printed.
 </p>
 </details>
+
+
+---
+###### 19. What's the output?
+
+```csharp
+
+public interface IAnimal { }
+
+public class Dog : IAnimal { }
+
+public static class Extensions
+{
+    public static void Speak<T>(this T animal) where T : IAnimal
+    {
+        Console.WriteLine("Woof!");
+    }
+
+    public static void Speak(this object obj)
+    {
+        Console.WriteLine("Generic object");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        object dog = new Dog();
+        dog.Speak();
+    }
+}
+
+```
+
+- A: Compiler error
+- B: Woof
+- C: Generic object
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+The output is <b>Generic object</b> because the variable dog is declared as object, not as Dog or IAnimal. Extension methods are resolved at compile time based on the static type of the variable, and object does not meet the generic constraint where T : IAnimal. Therefore, the compiler picks the non-generic Speak(this object obj) extension method.
+</p>
+</details>
