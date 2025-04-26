@@ -880,3 +880,43 @@ class Program
 The output is <b>Generic object</b> because the variable dog is declared as object, not as Dog or IAnimal. Extension methods are resolved at compile time based on the static type of the variable, and object does not meet the generic constraint where T : IAnimal. Therefore, the compiler picks the non-generic Speak(this object obj) extension method.
 </p>
 </details>
+
+
+---
+###### 20. What's the output?
+
+```csharp
+
+class Program
+{
+    static ref int Find(ref int x, ref int y)
+    {
+        if (x > y)
+            return ref x;
+        else
+            return ref y;
+    }
+
+    static void Main()
+    {
+        int a = 5, b = 10;
+        ref int max = ref Find(ref a, ref b);
+        max = 100;
+        Console.WriteLine($"{a}, {b}");
+    }
+}
+
+```
+
+- A: 100, 10
+- B: 5, 100
+- C: 5, 10
+- D: 100, 100
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+The method Find returns a <b>reference</b> to either x or y, depending on which is greater. Since b (10) is greater than a (5), Find returns a reference to b, and max becomes a reference to b. Setting max = 100 changes the value of b, so the final output is 5, 100.
+</p>
+</details>
