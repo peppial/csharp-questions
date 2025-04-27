@@ -954,7 +954,7 @@ class Program
 
 #### Answer: C
 When Select is called, it assigns b = a, so z gets the original value of x, which is 1. 
-Then Select returns a reference to x, and y is a ref to x, so changing y = 5 actually modifies x to 5. 
-Thus, the final output is 5 1, because x became 5, but z (copied before modification) remains 1.
+Then Select returns a reference to x, and y is a ref to x, so changing y = 5 actually modifies x to 5.  
+Thus, the final output is 5 1, because x became 5, but z (copied before modification) remains 1. 
 </p>
 </details>
