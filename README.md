@@ -920,3 +920,41 @@ class Program
 The method Find returns a <b>reference</b> to either x or y, depending on which is greater. Since b (10) is greater than a (5), Find returns a reference to b, and max becomes a reference to b. Setting max = 100 changes the value of b, so the final output is 5, 100.
 </p>
 </details>
+
+---
+###### 21. What's the output?
+
+```csharp
+
+class Program
+{
+    static ref int Select(ref int a, out int b)
+    {
+        b = a;
+        return ref a;
+    }
+
+    static void Main()
+    {
+        int x = 1;
+        ref int y = ref Select(ref x, out int z);
+        y = 5;
+        Console.WriteLine($"{x} {z}");
+    }
+}
+
+```
+- A: 5 5
+- B: 1 1
+- C: 5 1
+- D: 1 5
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+When Select is called, it assigns b = a, so z gets the original value of x, which is 1. 
+Then Select returns a reference to x, and y is a ref to x, so changing y = 5 actually modifies x to 5. 
+Thus, the final output is 5 1, because x became 5, but z (copied before modification) remains 1.
+</p>
+</details>
