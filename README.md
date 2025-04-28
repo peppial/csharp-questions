@@ -958,3 +958,40 @@ Then Select returns a reference to x, and y is a ref to x, so changing y = 5 act
 Thus, the final output is 5 1, because x became 5, but z (copied before modification) remains 1. 
 </p>
 </details>
+
+
+---
+###### 22. What's the output?
+
+```csharp
+
+
+class Program
+{
+    static void Main()
+    {
+        var numbers = Enumerable.Range(1, 5);
+        var query = numbers.Where(x => x % 2 == 0).Select(x => x * x);
+
+        numbers = Enumerable.Range(10, 5);
+
+        foreach (var n in query)
+            Console.Write(n + " ");
+    }
+}
+
+```
+- A: 4 16
+- B: 100 144
+- C: Nothing (empty output)
+- D: Throws an exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+LINQ uses <b>deferred execution</b>, meaning the query is not evaluated when defined, but only when enumerated inside foreach.  
+However, numbers was reassigned to a new range (10–14), and the query still refers to the <b>old enumerable (1–5)</b> because Enumerable.Range(1,5) produces an immutable sequence.  
+Thus, the original even numbers 2 and 4 are selected, squared to 4 and 16, and the output is 4 16.
+</p>
+</details>
