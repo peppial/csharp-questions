@@ -995,3 +995,38 @@ However, numbers was reassigned to a new range (10–14), and the query still re
 Thus, the original even numbers 2 and 4 are selected, squared to 4 and 16, and the output is 4 16.
 </p>
 </details>
+
+
+
+---
+###### 23. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        int counter = 0;
+        var query = Enumerable.Range(1, 3).Select(x => counter++);
+
+        foreach (var item in query.Reverse())
+            Console.Write(item);
+    }
+}
+
+
+```
+- A: Throws an exception
+- B: 210
+- C: 012
+- D: 222
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+The LINQ query uses deferred execution, so counter++ is not evaluated until the query is enumerated.  
+When query.Reverse() is executed, it forces evaluation of Select, incrementing counter as it maps 0, 1, 2 (in order), and then reverses the result to 2, 1, 0.
+</p>
+</details>
