@@ -5,7 +5,14 @@
 
 
 <p><div align="center">This repo is created similary to Lydia Hallie famous repo
-  <a href="https://github.com/lydiahallie/javascript-questions">javascript-questions</a>.</div><div align="center">Credits to her for the great idea and hard work! :heart:</div>
+  <a href="https://github.com/lydiahallie/javascript-questions">javascript-questions</a>.</div><div align="center">Credits to her for the great idea and hard work! :heart:
+  
+
+From fundamentals to advanced concepts, this C# quiz is perfect for testing your knowledge, refreshing your skills, or getting ready for a coding interview! 🚀
+Answers are provided in collapsible sections below each question — just click to expand. Have fun, and good luck!
+
+Any comments and suggestions are more than welcome.
+</div>
 </p>
 
 
