@@ -1007,7 +1007,6 @@ Thus, the original even numbers 2 and 4 are selected, squared to 4 and 16, and t
 </details>
 
 
-
 ---
 ###### 23. What's the output?
 
@@ -1038,5 +1037,43 @@ class Program
 #### Answer: A
 The LINQ query uses deferred execution, so counter++ is not evaluated until the query is enumerated.  
 When query.Reverse() is executed, it forces evaluation of Select, incrementing counter as it maps 0, 1, 2 (in order), and then reverses the result to 2, 1, 0.
+</p>
+</details>
+
+
+
+---
+###### 24. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        var actions = Enumerable.Range(1, 3)
+            .Select(i => new Action(() => Console.Write(i)))
+            .ToArray();
+
+        foreach (var action in actions)
+            action();
+    }
+}
+
+
+```
+- A: 333
+- B: 123
+- C: 111
+- D: 321
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A or B (depending on C# version)
+The lambda () => Console.Write(i) captures the loop variable i from the LINQ Select statement.  
+In older C# versions (pre-C# 5), all the lambdas would share the same captured i, resulting in 333.  
+In modern C#, LINQ with Select(i => ...) creates a new i per iteration (no closure issue here), so each Action correctly captures a distinct value.  
+Therefore, when each Action in the array is invoked, it prints 1, 2, then 3.
 </p>
 </details>
