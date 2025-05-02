@@ -1118,7 +1118,7 @@ Third,Second,First
 Task.WhenAny(t1, t2, t3) returns the first completed task (not necessarily in the order written). t2 has the shortest delay (500ms), so it finishes first.
 Therefore, firstDone becomes t2. await firstDone unwraps the result of t2, which is "Second".  
 
-Task.WhenAll(t1, t2, t3) waits for all tasks to finish and gathers their results in the original order they were defined (t1, t2, t3). 
+Task.WhenAll(t1, t2, t3) waits for all tasks to finish and gathers their results in <b>the original order</b> they were defined (t1, t2, t3). 
 So the second output is: "First,Second,Third".
 </p>
 </details>
