@@ -1077,3 +1077,48 @@ In modern C#, LINQ with Select(i => ...) creates a new i per iteration (no closu
 Therefore, when each Action in the array is invoked, it prints 1, 2, then 3.
 </p>
 </details>
+
+
+---
+###### 25. What's the output?
+
+```csharp
+
+class Program
+{
+    static async Task Main()
+    {
+        var t1 = Task.Delay(1000).ContinueWith(_ => "First");
+        var t2 = Task.Delay(500).ContinueWith(_ => "Second");
+        var t3 = Task.Delay(2000).ContinueWith(_ => "Third");
+
+        var firstDone = await Task.WhenAny(t1, t2, t3);
+        Console.WriteLine(await firstDone);
+
+        var all = await Task.WhenAll(t1, t2, t3);
+        Console.WriteLine(string.Join(",", all));
+    }
+}
+
+
+```
+- A: Second   
+First,Second,Third
+- B: Second  
+Third,Second,First
+- C: Second  
+Second,First,Third
+- D: First  
+Third,Second,First
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+Task.WhenAny(t1, t2, t3) returns the first completed task (not necessarily in the order written). t2 has the shortest delay (500ms), so it finishes first.
+Therefore, firstDone becomes t2. await firstDone unwraps the result of t2, which is "Second".  
+
+Task.WhenAll(t1, t2, t3) waits for all tasks to finish and gathers their results in the original order they were defined (t1, t2, t3). 
+So the second output is: "First,Second,Third".
+</p>
+</details>
