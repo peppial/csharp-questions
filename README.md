@@ -1122,3 +1122,54 @@ Task.WhenAll(t1, t2, t3) waits for all tasks to finish and gathers their results
 So the second output is: "First,Second,Third".
 </p>
 </details>
+
+
+
+---
+###### 26. What's the output?
+
+```csharp
+
+var numbers = Get();
+
+if (numbers.Any())
+{
+    Console.WriteLine("Looping");
+    foreach (var n in numbers)
+        Console.WriteLine(n);
+}
+
+IEnumerable<int> Get()
+{
+    Console.WriteLine("Generating");
+    yield return 1;
+    yield return 2;
+}
+
+
+```
+- A: Generating  
+Looping  
+1  
+2
+- B: Generating  
+Looping  
+Generating  
+1  
+2
+- C: Looping  
+1  
+2
+- D: Looping
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+The numbers variable holds an IEnumerable<int> produced by Get(), which uses yield return, meaning it's lazily evaluated.  
+
+The first call to numbers.Any() triggers enumeration, causing "Generating" to print once as it starts iterating to check if any elements exist.  
+
+The second enumeration in the foreach loop restarts the iterator, so "Generating" is printed again before yielding the values 1 and 2.
+</p>
+</details>
