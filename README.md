@@ -1167,9 +1167,7 @@ Generating
 
 #### Answer: B
 The numbers variable holds an IEnumerable<int> produced by Get(), which uses yield return, meaning it's lazily evaluated.  
-
 The first call to numbers.Any() triggers enumeration, causing "Generating" to print once as it starts iterating to check if any elements exist.  
-
 The second enumeration in the foreach loop restarts the iterator, so "Generating" is printed again before yielding the values 1 and 2.
 </p>
 </details>
