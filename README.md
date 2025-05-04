@@ -1195,7 +1195,7 @@ public class Program
 - B: 14
 - C: 10
 - D: 4
-- 
+  
 <details><summary><b>Answer</b></summary>
 <p>
 
