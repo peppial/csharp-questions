@@ -1171,3 +1171,37 @@ The first call to numbers.Any() triggers enumeration, causing "Generating" to pr
 The second enumeration in the foreach loop restarts the iterator, so "Generating" is printed again before yielding the values 1 and 2.
 </p>
 </details>
+
+
+---
+
+###### 27. What's the output?
+
+```csharp
+public class Program
+{
+    public static void Main()
+    {
+        List<int> numbers = new List<int>{1, 2, 3, 4, 5};
+
+        var result = numbers.Where(n => n % 2 == 0).Select(n => n * n).Aggregate((a, b) => a + b);
+        Console.WriteLine(result);
+    }
+}
+
+```
+
+- A: 20
+- B: 14
+- C: 10
+- D: 4
+- 
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+Where(n => n % 2 == 0) filters even numbers: {2, 4}  
+Select(n => n * n) squares them: {4, 16}  
+Aggregate((a, b) => a + b) adds them: 4 + 16 = 20
+</p>
+</details>
