@@ -1205,3 +1205,55 @@ Select(n => n * n) squares them: {4, 16}
 Aggregate((a, b) => a + b) adds them: 4 + 16 = 20
 </p>
 </details>
+
+---
+
+###### 28. What's the output?
+
+```csharp
+public class Publisher
+{
+    public delegate void Notify();
+    public event Notify ProcessCompleted;
+
+    public void RaiseEvent()
+    {
+        ProcessCompleted?.Invoke();
+    }
+}
+
+public class ExternalInvoker
+{
+    public void TryInvokeEvent(Publisher publisher)
+    {
+        publisher.ProcessCompleted(); 
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Publisher pub = new Publisher();
+        pub.ProcessCompleted += () => Console.WriteLine("Process Completed!");
+
+        ExternalInvoker invoker = new ExternalInvoker();
+        invoker.TryInvokeEvent(pub);
+    }
+}
+
+```
+
+- A: The event is successfully invoked.
+- B: The code runs, but the event is never triggered.
+- C: The code compiles but throws a runtime exception.
+- D: The code fails to compile with an error about event access.
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+Even though ProcessCompleted is a public event, C# <b>restricts event invocation to the class that declares it (or its derived classes)</b>.
+Attempting to invoke it from outside the declaring class (as in ExternalInvoker) results in a <b>compile-time error</b>.
+</p>
+</details>
