@@ -1257,3 +1257,35 @@ Even though ProcessCompleted is a public event, C# <b>restricts event invocation
 Attempting to invoke it from outside the declaring class (as in ExternalInvoker) results in a <b>compile-time error</b>.
 </p>
 </details>
+
+
+---
+
+###### 29. What's the output?
+
+```csharp
+Func<int> f1 = () => { Console.Write("1"); return 10; };
+Func<int> f2 = () => { Console.Write("2"); return 20; };
+var f = f1 + f2;
+
+int result = f();
+Console.Write($":{result}");
+
+```
+
+- A: 12:10
+- B: 21:20
+- C: 12:20
+- D: 12:30
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+In C#, multicast delegates (created using +) invoke all combined methods, but only the result of the last delegate is returned.
+f1 prints "1" and returns 10. f2 prints "2" and returns 20.
+
+When calling f(), both f1 and f2 are invoked, in order (f1, then f2), so Console.Write("1") then Console.Write("2") happens — output: 12. 
+f() returns the result of f2, which is 20, and that is printed after the colon.
+</p>
+</details>
