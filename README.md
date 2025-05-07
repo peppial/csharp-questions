@@ -1289,3 +1289,42 @@ When calling f(), both f1 and f2 are invoked, in order (f1, then f2), so Console
 f() returns the result of f2, which is 20, and that is printed after the colon.
 </p>
 </details>
+
+
+---
+
+###### 30. What's the output?
+
+```csharp
+class A { }
+class B : A { }
+
+class Program
+{
+    static void Print<T>(T item) where T : A => Console.WriteLine("Generic");
+    static void Print(A item) => Console.WriteLine("Non-generic");
+
+    static void Main()
+    {
+        B b = new B();
+        Print(b);
+    }
+}
+
+
+```
+
+- A: Generic
+- B: Non-generic
+- C: Compiler error
+- D: Runtime error
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+When the method Print(b) is called with an object of type B, the compiler considers both the generic method Print<T>(T item) and the non-generic method Print(A item). 
+The method Print<T>(T item) can be used because B is a subclass of A, and it matches the constraint where T : A. The compiler will infer T as B, making it a valid call for the generic method.  
+In C#, the generic method is preferred over the non-generic one when the generic method's type constraint is satisfied. In this case, B satisfies T : A, so the generic method is chosen.
+</p>
+</details>
