@@ -1328,3 +1328,53 @@ The method Print<T>(T item) can be used because B is a subclass of A, and it mat
 In C#, the generic method is preferred over the non-generic one when the generic method's type constraint is satisfied. In this case, B satisfies T : A, so the generic method is chosen.
 </p>
 </details>
+
+
+---
+
+###### 31. What's the output?
+
+```csharp
+interface IProducer<T>
+{
+    T Produce();
+}
+
+class Animal { public override string ToString() => "Animal"; }
+class Dog : Animal { public override string ToString() => "Dog"; }
+
+class DogProducer : IProducer<Dog>
+{
+    public Dog Produce() => new Dog();
+}
+
+class Program
+{
+    static void Main()
+    {
+        IProducer<Dog> dogProducer = new DogProducer();
+        IProducer<Animal> animalProducer = dogProducer;
+        Console.WriteLine(animalProducer.Produce());
+    }
+}
+
+
+```
+
+- A: Compilation error
+- B: Runtime InvalidCastException
+- C: Prints "Dog"
+- D: Prints "Animal"
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+In C#, generic interfaces are <b>not covariant</b> by default unless explicitly declared with the out keyword on the type parameter.
+IProducer<T> interface is declared as interface IProducer<T>, without covariance. Therefore, even though Dog derives from Animal, IProducer<Dog> cannot be assigned to IProducer<Animal>. 
+
+So the line: ```csharp IProducer<Animal> animalProducer = dogProducer;```
+causes a compile-time error: "Cannot implicitly convert type 'IProducer<Dog>' to 'IProducer<Animal>'." 
+To make this code compile the interface should be declared as: interface ```csharp IProducer<out T>```
+</p>
+</details>
