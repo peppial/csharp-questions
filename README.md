@@ -1375,6 +1375,6 @@ IProducer<T> interface is declared as interface IProducer<T>, without covariance
 
 So the line: ` IProducer<Animal> animalProducer = dogProducer;`
 causes a compile-time error: "Cannot implicitly convert type `IProducer<Dog>` to `IProducer<Animal>`." 
-To make this code compile the interface should be declared as: interface `csharp IProducer<out T>`
+To make this code compile the interface should be declared as: `interface IProducer<out T>`
 </p>
 </details>
