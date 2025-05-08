@@ -1374,7 +1374,7 @@ In C#, generic interfaces are <b>not covariant</b> by default unless explicitly 
 IProducer<T> interface is declared as interface IProducer<T>, without covariance. Therefore, even though Dog derives from Animal, IProducer<Dog> cannot be assigned to IProducer<Animal>. 
 
 So the line: ```csharp IProducer<Animal> animalProducer = dogProducer;```
-causes a compile-time error: "Cannot implicitly convert type 'IProducer<Dog>' to 'IProducer<Animal>'." 
+causes a compile-time error: "Cannot implicitly convert type `IProducer<Dog>` to `IProducer<Animal>`." 
 To make this code compile the interface should be declared as: interface ```csharp IProducer<out T>```
 </p>
 </details>
