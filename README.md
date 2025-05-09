@@ -1378,3 +1378,45 @@ causes a compile-time error: "Cannot implicitly convert type `IProducer<Dog>` to
 To make this code compile the interface should be declared as: `interface IProducer<out T>`
 </p>
 </details>
+
+
+---
+
+###### 32. What's the output?
+
+```csharp
+class Program
+{
+    static void Main()
+    {
+        foreach (var x in Generate())
+        {
+            Console.WriteLine(x);
+            break;
+        }
+    }
+
+    static IEnumerable<int> Generate()
+    {
+        Console.WriteLine("Start");
+        yield return 1;
+        Console.WriteLine("End");
+    }
+}
+
+```
+
+- A: Compilation error
+- B: Start 1 End
+- C: Start 1
+- D: Start End 1
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+When Generate() is called in the foreach, the method body doesn't execute immediately. It starts execution only when the enumerator is advanced (e.g., by entering the loop).
+The line Console.WriteLine("Start") is printed right before the first yield return 1.  
+After yield return 1, control returns to the loop, which prints 1 and breaks. Because of the break, the iterator is not advanced further, so "End" is never printed.
+</p>
+</details>
