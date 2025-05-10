@@ -1420,3 +1420,47 @@ The line Console.WriteLine("Start") is printed right before the first yield retu
 After yield return 1, control returns to the loop, which prints 1 and breaks. Because of the break, the iterator is not advanced further, so "End" is never printed.
 </p>
 </details>
+
+
+---
+
+###### 33. What's the output?
+
+```csharp
+class Box
+{
+    public int Value;
+}
+
+class Program
+{
+    static void Main()
+    {
+        var x = new Box { Value = 100 };
+        var y = x;
+        Modify(ref x);
+        Console.WriteLine(y.Value);
+    }
+
+    static void Modify(ref Box b)
+    {
+        b = new Box { Value = 200 };
+    }
+}
+
+```
+
+- A: Runtime error
+- B: 200
+- C: No output
+- D: 100
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+Initially, both x and y reference the same Box object on the heap (Value = 100). 
+When Modify(ref x) is called, it replaces the reference in x with a new Box instance (Value = 200). However, this change only affects x because it’s passed by reference.  
+y still points to the original Box instance (Value = 100), so Console.WriteLine(y.Value) prints 100.
+</p>
+</details>
