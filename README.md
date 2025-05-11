@@ -1464,3 +1464,38 @@ When Modify(ref x) is called, it replaces the reference in x with a new Box inst
 y still points to the original Box instance (Value = 100), so Console.WriteLine(y.Value) prints 100.
 </p>
 </details>
+
+
+
+---
+
+###### 34. What's the output?
+
+```csharp
+class Program
+{
+    static string Format(int x) => $"({x})";
+    static object Box(int x) => x;
+
+    static void Main()
+    {
+        var funcs = new[] { (Func<int, object>)Format, Box };
+        Console.WriteLine(funcs );
+    }
+}
+
+
+```
+
+- A: Runtime error
+- B: System.Func`2[System.Int32,System.Object][]
+- C: System.Func`2[System.Int32,System.String][]
+- D: System.Func cannot be inferred from method group
+  
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+The line `var funcs = new[] { (Func<int, object>)Format, Box };` causes both Format and Box to be treated as `Func<int, object>`. Although Format returns string, and string is implicitly convertible to object, this cast makes the method group compatible with Func<int, object> through covariance in the return type. The compiler infers the array type as Func<int, object>[]. This compiles because both method references can be converted to that delegate type, even though their actual return types differ.
+</p>
+</details>
