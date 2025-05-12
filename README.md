@@ -1499,3 +1499,50 @@ class Program
 The line `var funcs = new[] { (Func<int, object>)Format, Box };` causes both Format and Box to be treated as `Func<int, object>`. Although Format returns string, and string is implicitly convertible to object, this cast makes the method group compatible with Func<int, object> through covariance in the return type. The compiler infers the array type as Func<int, object>[]. This compiles because both method references can be converted to that delegate type, even though their actual return types differ.
 </p>
 </details>
+
+
+
+---
+
+###### 35. What's the output?
+
+```csharp
+class A
+{
+    static A()
+    {
+        Console.WriteLine("Static A");
+    }
+
+    public A()
+    {
+        Console.WriteLine("Instance A");
+    }
+
+    public static void SayHello() => Console.WriteLine("Hello from A");
+}
+
+class Program
+{
+    static void Main()
+    {
+        A.SayHello();
+        var obj = new A();
+    }
+}
+
+```
+
+- A: Static A, Hello from A, Instance A
+- B: Hello from A, Instance A
+- C: Static A, Instance A
+- D: Hello from A
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+When the static method SayHello is first accessed, the runtime invokes the static constructor static A() before executing SayHello(). Then, creating a new instance with new A() triggers the instance constructor, printing "Instance A". Static constructors are called automatically once before any static members are accessed or an instance is created, whichever comes first.
+</p>
+</details>
+
