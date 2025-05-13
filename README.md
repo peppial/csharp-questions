@@ -1546,3 +1546,39 @@ When the static method SayHello is first accessed, the runtime invokes the stati
 </p>
 </details>
 
+
+---
+
+###### 36. What's the output?
+
+```csharp
+record Person
+{
+    public string Name { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        var p1 = new Person { Name = "Alice" };
+        p1.Name = "Bob";
+
+        Console.WriteLine($"{p1.Name}");
+    }
+}
+
+```
+
+- A: Alice
+- B: Bob
+- C: Complication error
+- D: Runtime error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+The Person record has a mutable Name property because it uses get; set;, allowing changes after initialization. Although records are typically associated with immutability, they can be mutable if defined that way. In this case, changing p1.Name to "Bob" is valid and prints "Bob"
+</p>
+</details>
