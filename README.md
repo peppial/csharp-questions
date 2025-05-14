@@ -1582,3 +1582,40 @@ class Program
 The Person record has a mutable Name property because it uses get; set;, allowing changes after initialization. Although records are typically associated with immutability, they can be mutable if defined that way. In this case, changing p1.Name to "Bob" is valid and prints "Bob"
 </p>
 </details>
+
+
+
+---
+
+###### 37. What's the output?
+
+```csharp
+record Person(string Name);
+record Employee(string Name) : Person(Name);
+
+class Program
+{
+    static void Main()
+    {
+        Person p1 = new Person("Alice");
+        Person p2 = new Employee("Alice");
+
+        Console.WriteLine(p1 == p2);
+        Console.WriteLine(ReferenceEquals(p1, p2));
+    }
+}
+
+```
+
+- A: Complication error
+- B: True, True
+- C: False, False
+- D: True, False
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+In this code, p1 == p2 returns False because even though both records have the same data, they are of different runtime types (Person vs Employee), and record equality checks for both value and type equality. ReferenceEquals(p1, p2) also returns False since they are two separate instances in memory. Record equality in C# requires both the type and the values of all properties to match exactly.
+</p>
+</details>
