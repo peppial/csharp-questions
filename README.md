@@ -1619,3 +1619,48 @@ class Program
 In this code, p1 == p2 returns False because even though both records have the same data, they are of different runtime types (Person vs Employee), and record equality checks for both value and type equality. ReferenceEquals(p1, p2) also returns False since they are two separate instances in memory. Record equality in C# requires both the type and the values of all properties to match exactly.
 </p>
 </details>
+
+
+---
+
+###### 38. What's the output?
+
+```csharp
+
+record Shape;
+record Circle(double Radius) : Shape;
+record Rectangle(double Width, double Height) : Shape;
+
+class Program
+{
+    static void Main()
+    {
+        Shape s = new Circle(5);
+
+        string result = s switch
+        {
+            Rectangle { Width: > 0, Height: > 0 } => "Rectangle",
+            Circle { Radius: > 10 } => "Large Circle",
+            Circle => "Small Circle",
+            _ => "Unknown"
+        };
+
+        Console.WriteLine(result);
+    }
+}
+
+
+```
+
+- A: Rectangle
+- B: Large Circle
+- C: Small Circle
+- D: Unknown
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+The switch expression uses pattern matching to check the runtime type and properties of a Shape instance. Since s is a Circle with radius 5, it doesn’t match the Radius > 10 case but matches the general Circle case, resulting in "Small Circle" being printed. This demonstrates property-based pattern matching and pattern ordering in C#.
+</p>
+</details>
