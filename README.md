@@ -1664,3 +1664,58 @@ class Program
 The switch expression uses pattern matching to check the runtime type and properties of a Shape instance. Since s is a Circle with radius 5, it doesn’t match the Radius > 10 case but matches the general Circle case, resulting in "Small Circle" being printed. This demonstrates property-based pattern matching and pattern ordering in C#.
 </p>
 </details>
+
+
+
+---
+
+###### 39. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        int value = 5;
+        ModifyValue(ref value);
+        Console.WriteLine(value);
+    }
+
+    static void ModifyValue(ref int x)
+    {
+        x = 10;
+        try
+        {
+            x = 20;
+            throw new Exception();
+        }
+        catch
+        {
+            x = 30;
+        }
+        finally
+        {
+            x = 40;
+        }
+        x = 50;
+    }
+}
+
+
+```
+
+- A: 10
+- B: 20 
+- C: 50
+- D: Exception thrown
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+The try block sets x to 20 and then throws an exception. The catch block catches the exception and sets x to 30. The finally block always runs, setting x to 40.
+After the finally block finishes, execution resumes after the entire try-catch-finally structure, so the line x = 50; runs and sets x to 50.
+Therefore, when ModifyValue finishes, x is 50, which is printed.
+</p>
+</details>
