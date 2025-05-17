@@ -1761,3 +1761,37 @@ class Program
 The pattern [double x, double y] matches because the input ReadOnlySpan<double> contains exactly two elements. List patterns in C# match the structure and length of the input sequence; here, the compiler checks that the span has a length of 2 and binds the first element to x and the second to y. Since the input is [5.0, 7.0], this pattern is a perfect match and gets selected in the switch.
 </p>
 </details>
+
+
+
+---
+
+###### 40. What's the output?
+
+```csharp
+
+IEnumerable<string> Foo()
+{
+    yield return "Foo1";
+    Console.WriteLine("Foo2");
+}
+
+
+foreach (var str in Foo())
+        Console.Write(str);
+
+
+```
+
+- A: Foo1Foo2
+- B: Foo2Foo1
+- C: Foo1
+- D: Nothing
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+The foreach iterates fully over Foo(). It first prints "Foo1" (from yield return). Then the iterator resumes, executes Console.WriteLine("Foo2") (which prints "Foo2" on a new line). The combined output is "Foo1" immediately followed by "Foo2" on the next line, appearing as "Foo1Foo2" visually in the console.
+</p>
+</details>
