@@ -1719,3 +1719,45 @@ After the finally block finishes, execution resumes after the entire try-catch-f
 Therefore, when ModifyValue finishes, x is 50, which is printed.
 </p>
 </details>
+
+
+---
+
+###### 39. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        var result = Sum([5.0, 7.0 ]);
+        Console.WriteLine(result);
+    }
+
+    static double Sum(ReadOnlySpan<double> vector)
+    {
+        return vector switch
+        {
+            [] => 0,
+            [double x] => x,
+            [double x, double y] => x + y,
+            _ => vector.ToArray().Sum()
+        };
+    }
+}
+
+```
+
+- A: 0
+- B: 5 
+- C: 7
+- D: 12
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+The pattern [double x, double y] matches because the input ReadOnlySpan<double> contains exactly two elements. List patterns in C# match the structure and length of the input sequence; here, the compiler checks that the span has a length of 2 and binds the first element to x and the second to y. Since the input is [5.0, 7.0], this pattern is a perfect match and gets selected in the switch.
+</p>
+</details>
