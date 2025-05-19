@@ -1795,3 +1795,47 @@ foreach (var str in Foo())
 The foreach iterates fully over Foo(). It first prints "Foo1" (from yield return). Then the iterator resumes, executes Console.WriteLine("Foo2") (which prints "Foo2" on a new line). The combined output is "Foo1" immediately followed by "Foo2" on the next line, appearing as "Foo1Foo2" visually in the console.
 </p>
 </details>
+
+
+
+---
+
+###### 41. What's the output?
+
+```csharp
+
+var f = new Foo();
+using (f)
+{
+    Console.WriteLine(f.GetDispose());
+}
+Console.WriteLine(f.GetDispose());
+
+public struct Foo : IDisposable
+{
+    private bool dispose;
+    public void Dispose()
+    {
+        dispose = true;
+    }
+    public bool GetDispose()
+    {
+        return dispose;
+    }
+}
+
+
+```
+
+- A: False, True
+- B: False, False
+- C: True, False
+- D: Runtime error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+In C#, when a <b>struct</b> is used in a using statement, it is boxed and copied into the scope of the using. The Dispose call happens on that copy, not the original f. Therefore, f.dispose remains false both inside and outside the using block.
+</p>
+</details>
