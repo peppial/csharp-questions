@@ -1839,3 +1839,47 @@ public struct Foo : IDisposable
 In C#, when a <b>struct</b> is used in a using statement, it is boxed and copied into the scope of the using. The Dispose call happens on that copy, not the original f. Therefore, f.dispose remains false both inside and outside the using block.
 </p>
 </details>
+
+---
+
+###### 42. What's the output?
+
+```csharp
+
+class Program
+{
+    private static object sobject = new();
+
+    private static void Write()
+    {
+        lock (sobject)
+        {
+            Console.WriteLine("test");
+        }
+    }
+
+    static void Main(string[] args)
+    {
+        lock (sobject)
+        {
+            Write();
+        }
+    }
+}
+
+```
+
+- A: The program will hang (deadlock)
+- B: Runtime error
+- C: Complication error
+- D: test
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+The lock statement uses a <b>reentrant lock</b>, meaning the <b>same thread</b> can acquire the lock multiple times without deadlocking.
+So, when Main locks sobject and calls Write(), which also locks sobject, it does not cause a deadlock.
+The program safely prints "test" once.
+</p>
+</details>
