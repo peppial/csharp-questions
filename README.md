@@ -1883,3 +1883,37 @@ So, when Main locks sobject and calls Write(), which also locks sobject, it does
 The program safely prints "test" once.
 </p>
 </details>
+
+
+---
+
+###### 43. What's the output?
+
+```csharp
+
+
+int c = 3;
+Console.Write(Sum(5,3,out c));
+Console.Write(c);
+
+static int Sum(int a, int b, out int c)
+{
+    return a + b;
+}
+
+
+```
+
+- A: 8 3
+- B: 8 8
+- C: Complication error
+- D: 5 3
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+The method Sum has an out parameter c, which must be assigned a value inside the method before control returns to the caller. 
+However, in this code, the method returns a + b without assigning any value to c, which violates the rule for out parameters. As a result, the compiler will throw an error.
+</p>
+</details>
