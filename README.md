@@ -1917,3 +1917,49 @@ The method Sum has an out parameter c, which must be assigned a value inside the
 However, in this code, the method returns a + b without assigning any value to c, which violates the rule for out parameters. As a result, the compiler will throw an error.
 </p>
 </details>
+
+
+
+---
+
+###### 44. What's the output?
+
+```csharp
+
+
+class Counter
+{
+    public int Value;
+    public void Increment() => Value++;
+}
+
+class Program
+{
+    static void Update(in Counter c)
+    {
+        c.Increment();
+        Console.Write(c.Value);
+    }
+
+    static void Main()
+    {
+        var counter = new Counter { Value = 5 };
+        Update(counter);
+        Console.Write(counter.Value);
+    }
+}
+
+```
+
+- A: 55
+- B: 66
+- C: 56
+- D: Complication error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+The in modifier prevents reassignment of the parameter c, but since Counter is a reference type, its internal state can still be modified. c.Increment() increases the Value to 6, and both c.Value and counter.Value reflect that change. Hence, the output is 66.
+</p>
+</details>
