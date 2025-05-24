@@ -1963,3 +1963,43 @@ class Program
 The in modifier prevents reassignment of the parameter c, but since Counter is a reference type, its internal state can still be modified. c.Increment() increases the Value to 6, and both c.Value and counter.Value reflect that change. Hence, the output is 66.
 </p>
 </details>
+
+
+---
+
+###### 45. What's the output?
+
+```csharp
+
+try
+{
+    var array = new int[] { 1, 2 };
+    Console.Write(array[5]);
+}
+catch(ApplicationException e)
+{
+    Console.Write(1);
+}
+catch(SystemException e)
+{
+    Console.Write(2);
+}
+catch(Exception e)
+{
+    Console.Write(3);
+}
+
+```
+
+- A: 1
+- B: 2
+- C: 3
+- D: Runtime error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+Accessing array[5] throws an IndexOutOfRangeException, which is a subclass of SystemException. Therefore, the SystemException catch block is executed, printing 2. The more general Exception block is skipped due to exception type specificity.
+</p>
+</details>
