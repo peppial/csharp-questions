@@ -2003,3 +2003,34 @@ catch(Exception e)
 Accessing array[5] throws an IndexOutOfRangeException, which is a subclass of SystemException. Therefore, the SystemException catch block is executed, printing 2. The more general Exception block is skipped due to exception type specificity.
 </p>
 </details>
+
+
+---
+
+###### 46. What's the output?
+
+```csharp
+
+Foo<int>.Count++;
+Console.WriteLine(Foo<double>.Count);
+
+class Foo<T>
+{
+    public static int Count;
+}
+
+
+```
+
+- A: 0
+- B: 1
+- C: Complication Error
+- D: Runtime error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+Foo<T> is a generic class, so each closed generic type (Foo<int>, Foo<double>, etc.) has its own separate static field. Incrementing Foo<int>.Count does not affect Foo<double>.Count, which remains at its default value of 0. Hence, the output is 0.
+</p>
+</details>
