@@ -2034,3 +2034,36 @@ class Foo<T>
 Foo<T> is a generic class, so each closed generic type (Foo<int>, Foo<double>, etc.) has its own separate static field. Incrementing Foo<int>.Count does not affect Foo<double>.Count, which remains at its default value of 0. Hence, the output is 0.
 </p>
 </details>
+
+---
+
+###### 47. What's the output?
+
+```csharp
+
+var numbers = GetNumbers();
+var evenNumbers = numbers.Select(n => n * 2);
+Console.WriteLine(evenNumbers.FirstOrDefault());
+
+IEnumerable<int> GetNumbers()
+{
+    yield return 1;
+
+    throw new Exception();
+    yield return 2;
+}
+
+```
+
+- A: 0
+- B: 2
+- C: Exception is thrown
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+The method GetNumbers() uses yield return, so it's lazily evaluated. FirstOrDefault() causes only the first value to be pulled from the iterator, which yields 1, and then 1 * 2 = 2 is returned. The throw new Exception() is never reached, so no exception is thrown.
+</p>
+</details>
