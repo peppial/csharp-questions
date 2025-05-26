@@ -2048,7 +2048,6 @@ Console.WriteLine(evenNumbers.FirstOrDefault());
 IEnumerable<int> GetNumbers()
 {
     yield return 1;
-
     throw new Exception();
     yield return 2;
 }
