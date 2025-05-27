@@ -2066,3 +2066,42 @@ IEnumerable<int> GetNumbers()
 The method GetNumbers() uses yield return, so it's lazily evaluated. FirstOrDefault() causes only the first value to be pulled from the iterator, which yields 1, and then 1 * 2 = 2 is returned. The throw new Exception() is never reached, so no exception is thrown.
 </p>
 </details>
+
+---
+
+###### 48. What's the output?
+
+```csharp
+
+var bar = new Bar { Foo = new Foo() };
+bar.Foo.Change(5);
+Console.WriteLine(bar.Foo.val);
+
+public struct Foo
+{
+    public int val;
+    public void Change(int newVal)
+    {
+        val = newVal;
+    }
+}
+public class Bar
+{
+    public Foo Foo { get; set; }
+}
+
+
+```
+
+- A: 0
+- B: 5
+- C: Exception is thrown
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+In C#, structs are value types. When bar.Foo.Change(5) is called, it operates on a <b>copy of the struct</b> returned by the getter, not the actual Foo inside Bar. Therefore, the original Foo inside bar remains unchanged, and val stays 0.
+</p>
+</details>
