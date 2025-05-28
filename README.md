@@ -2105,3 +2105,32 @@ public class Bar
 In C#, structs are value types. When bar.Foo.Change(5) is called, it operates on a <b>copy of the struct</b> returned by the getter, not the actual Foo inside Bar. Therefore, the original Foo inside bar remains unchanged, and val stays 0.
 </p>
 </details>
+
+---
+
+###### 49. What's the output?
+
+```csharp
+
+var list = new
+{
+    Items = new List<int> { 1, 2, 3, 4 }.GetEnumerator()
+};
+while (list.Items.MoveNext())
+    Console.WriteLine(list.Items.Current);
+
+
+```
+
+- A: Many 0
+- B: 1 1 1 1
+- C: Exception is thrown
+- D: 1 2 3 4
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+List<T>.Enumerator is a value type (a struct), and in this code, list.Items is accessed repeatedly inside the loop. Since list.Items returns a copy of the enumerator every time (due to value semantics of structs), each call to MoveNext() operates on a fresh, unadvanced copy. Therefore, MoveNext() always returns true, and Current always returns the default int value, which is 0. This causes an infinite loop of 0s being printed.
+</p>
+</details>
