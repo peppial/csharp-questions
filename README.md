@@ -2134,3 +2134,44 @@ while (list.Items.MoveNext())
 List<T>.Enumerator is a value type (a struct), and in this code, list.Items is accessed repeatedly inside the loop. Since list.Items returns a copy of the enumerator every time (due to value semantics of structs), each call to MoveNext() operates on a fresh, unadvanced copy. Therefore, MoveNext() always returns true, and Current always returns the default int value, which is 0. This causes an infinite loop of 0s being printed.
 </p>
 </details>
+
+
+---
+
+###### 50. What's the output?
+
+```csharp
+
+using System.Text;
+
+class Program
+{
+    static void Main()
+    {
+        var a = "XY";
+        var b = new StringBuilder().Append('X').Append('Y').ToString();
+        var c = string.Intern(b);
+        Console.WriteLine(a == b);
+        Console.WriteLine(a == c);
+        Console.WriteLine((object)a == (object)b);
+        Console.WriteLine((object)a == (object)c);
+    }
+}
+
+```
+
+- A: False False True True
+- B: True True False True
+- C: False True False True
+- D: False True True True
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+a == b: True because == checks value equality for strings.
+a == c: True, both are "XY", and interning ensures c points to the same string as a.
+(object)a == (object)b: False because b was constructed at runtime and is not interned; it's a different reference.
+(object)a == (object)c: True because string.Intern(b) returns the reference of the already interned string "XY" that a refers to.
+</p>
+</details>
