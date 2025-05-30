@@ -2175,3 +2175,37 @@ a == c: True, both are "XY", and interning ensures c points to the same string a
 (object)a == (object)c: True because string.Intern(b) returns the reference of the already interned string "XY" that a refers to.
 </p>
 </details>
+
+
+
+---
+
+###### 51. What's the output?
+
+```csharp
+
+Console.Write((int)Color.Green);
+
+enum Color
+{
+    Red,
+    Green = 0,
+    Blue = 0
+}
+
+```
+
+- A: Exception is thrown
+- B: Complication error
+- C: 0
+- D: 1
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+Enums in C# can have multiple names mapped to the same underlying value.
+Both Green and Blue are explicitly assigned the value 0.
+This is legal in C#, and the compiler simply treats Green and Blue as alternative names for the same value.
+</p>
+</details>
