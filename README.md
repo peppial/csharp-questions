@@ -2184,28 +2184,29 @@ a == c: True, both are "XY", and interning ensures c points to the same string a
 
 ```csharp
 
-Console.Write((int)Color.Green);
+object o = "hello";
+A.Print(o);
 
-enum Color
+class A
 {
-    Red,
-    Green = 0,
-    Blue = 0
+    public static void Print<T>(T value) => Console.WriteLine("Generic");
+    public static void Print(string value) => Console.WriteLine("String");
 }
+
 
 ```
 
 - A: Exception is thrown
 - B: Complication error
-- C: 0
-- D: 1
+- C: Generic
+- D: String
 
 <details><summary><b>Answer</b></summary>
 <p>
 
 #### Answer: C
-Enums in C# can have multiple names mapped to the same underlying value.
-Both Green and Blue are explicitly assigned the value 0.
-This is legal in C#, and the compiler simply treats Green and Blue as alternative names for the same value.
+The variable o is declared as object, so the call Print(o) resolves to Print<T>(T) with T inferred as object.
+Method overloading in C# is resolved at compile-time, and the actual runtime type of the object is not considered when selecting an overload.
+Even though the runtime type is string, the compiler chooses the generic overload because it matches the compile-time type.
 </p>
 </details>
