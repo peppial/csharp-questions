@@ -2210,3 +2210,45 @@ Method overloading in C# is resolved at compile-time, and the actual runtime typ
 Even though the runtime type is string, the compiler chooses the generic overload because it matches the compile-time type.
 </p>
 </details>
+
+
+---
+
+###### 52. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        Print(42);
+    }
+
+    static void Print<T>(T value) where T : struct
+    {
+        Console.WriteLine("Struct overload");
+    }
+
+    static void Print<T>(T value) where T : class
+    {
+        Console.WriteLine("Class overload");
+    }
+}
+
+
+```
+
+- A: Struct overload"
+- B: Class overload
+- C: Complication error
+- D: Exception is thrown
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+C# does not allow overloads to differ only by generic constraints. The two methods are considered ambiguous in overload resolution, and result in a compile-time error regardless of which one is actually applicable for a given type at the call site.
+
+</p>
+</details>
