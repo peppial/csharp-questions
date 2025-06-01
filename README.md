@@ -2239,7 +2239,7 @@ class Program
 
 ```
 
-- A: Struct overload"
+- A: Struct overload
 - B: Class overload
 - C: Complication error
 - D: Exception is thrown
