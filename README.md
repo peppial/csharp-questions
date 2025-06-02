@@ -2252,3 +2252,35 @@ C# does not allow overloads to differ only by generic constraints. The two metho
 
 </p>
 </details>
+
+
+---
+
+###### 53. What's the output?
+
+```csharp
+
+Action[] actions = new Action[3];
+
+for (int i = 0; i < 3; i++)
+{
+    actions[i] = () => Console.Write(i);
+}
+
+Parallel.ForEach(actions, action => action());
+
+
+```
+
+- A: 333
+- B: 123
+- C: 321
+- D: Non-deterministic
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+All three lambda expressions capture the same variable i by reference, not by value. By the time the parallel execution starts, the loop has completed and i has the value 3. So all three actions will print 3, resulting in output 333.
+</p>
+</details>
