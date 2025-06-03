@@ -2269,7 +2269,6 @@ for (int i = 0; i < 3; i++)
 
 Parallel.ForEach(actions, action => action());
 
-
 ```
 
 - A: 333
@@ -2282,5 +2281,50 @@ Parallel.ForEach(actions, action => action());
 
 #### Answer: A
 All three lambda expressions capture the same variable i by reference, not by value. By the time the parallel execution starts, the loop has completed and i has the value 3. So all three actions will print 3, resulting in output 333.
+</p>
+</details>
+
+
+---
+
+###### 54. Which one will cause a compiler error?
+
+```csharp
+
+public partial class Sample
+{
+    // A
+    partial void OnInitialized();
+
+    // B
+    partial void OnLoaded(string name = "default");
+
+    // C
+    partial int Calculate();
+
+    // D
+    partial void OnSaving();
+}
+
+
+```
+
+- A: A
+- B: B
+- C: C
+- D: D
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+Only C is invalid due to the non-void return type.
+
+A partial method isn't required to have an implementing declaration in the following cases:
+
+It doesn't have any accessibility modifiers (including the default private).
+It returns void.
+It doesn't have any out parameters.
+It doesn't have any of the following modifiers virtual, override, sealed, new, or extern.
 </p>
 </details>
