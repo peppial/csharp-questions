@@ -2328,3 +2328,38 @@ It doesn't have any out parameters.
 It doesn't have any of the following modifiers virtual, override, sealed, new, or extern.
 </p>
 </details>
+
+---
+
+###### 55. What's the output?
+
+```csharp
+
+using System.Buffers;
+
+var pool = ArrayPool<byte>.Shared;
+
+byte[] buffer1 = pool.Rent(4);
+buffer1[0] = 42;
+
+pool.Return(buffer1);
+
+byte[] buffer2 = pool.Rent(4);
+Console.WriteLine(buffer2[0]);
+
+```
+
+- A: 0
+- B: 42
+- C: Compilation error
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+When `ArrayPool<T>.Return()` is called, it does **not clear** the array by default. So when the same array is rented again, it may still contain old data like `42`. To avoid this, you must retu
+
+</p>
+</details>
+
