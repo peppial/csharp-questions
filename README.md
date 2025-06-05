@@ -2358,7 +2358,51 @@ Console.WriteLine(buffer2[0]);
 <p>
 
 #### Answer: B
-When `ArrayPool<T>.Return()` is called, it does **not clear** the array by default. So when the same array is rented again, it may still contain old data like `42`. To avoid this, you must retu
+When `ArrayPool<T>.Return()` is called, it does **not clear** the array by default. So when the same array is rented again, it may still contain old data like `42`. To avoid this, you must return the array with `clearArray: true`.
+
+</p>
+</details>
+
+
+---
+
+###### 56. What's the output?
+
+```csharp
+
+using System.Reflection;
+
+class Mystery
+{
+    private void Say(object x) => Console.Write("object ");
+    private void Say(string x) => Console.Write("string ");
+}
+
+class Program
+{
+    static void Main()
+    {
+        var m = typeof(Mystery).GetMethod("Say", BindingFlags.NonPublic | BindingFlags.Instance);
+        var obj = new Mystery();
+        m.Invoke(obj, new object[] { "hi" });
+    }
+}
+
+
+```
+
+- A: string
+- B: object
+- C: Compilation error
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+The call to `GetMethod("Say", ...)` fails because there are two private overloads: one that takes `object` and one that takes `string`.  
+Since `GetMethod` does not know which one to return, it throws an `AmbiguousMatchException`.  
+To fix this, you must use the overload of `GetMethod` that specifies parameter types explicitly.
 
 </p>
 </details>
