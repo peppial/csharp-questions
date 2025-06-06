@@ -2407,3 +2407,41 @@ To fix this, you must use the overload of `GetMethod` that specifies parameter t
 </p>
 </details>
 
+
+---
+
+###### 57. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        var a = new { X = 1, Y = 2 };
+        var b = new { X = 1, Y = 2 };
+
+        Console.WriteLine(a.Equals(b));
+    }
+}
+
+
+
+```
+
+- A: True
+- B: False
+- C: Compilation error
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+The output is **`True`**.  
+Anonymous types in C# override `Equals` and `GetHashCode` to provide value-based equality, meaning two instances with the same property names and values are considered equal.  
+Here, both `a` and `b` have identical properties (`X = 1`, `Y = 2`), so `a.Equals(b)` returns `True`.
+
+</p>
+</details>
+
