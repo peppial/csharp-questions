@@ -2445,3 +2445,44 @@ Here, both `a` and `b` have identical properties (`X = 1`, `Y = 2`), so `a.Equal
 </p>
 </details>
 
+
+---
+
+###### 58. What's the output?
+
+```csharp
+
+class Data
+{
+    public string this[int index] => "int";
+
+    public string this[string key] => "string";
+}
+
+class Program
+{
+    static void Main()
+    {
+        var d = new Data();
+        Console.WriteLine(d['A']);
+    }
+}
+
+```
+
+- A: int
+- B: string
+- C: Compilation error
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+In C#, when using an indexer like `d['A']`, the character `'A'` is implicitly converted to its underlying `int` value (Unicode code point 65).  
+Since there's an indexer that accepts an `int`, that one is selected, and `"int"` is printed.
+
+</p>
+</details>
+
