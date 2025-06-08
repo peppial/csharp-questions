@@ -2486,3 +2486,40 @@ Since there's an indexer that accepts an `int`, that one is selected, and `"int"
 </p>
 </details>
 
+
+---
+
+###### 59. What's the output?
+
+```csharp
+
+using System.Linq.Expressions;
+
+Expression<Func<int, int>> inner = z => z + 10;
+Expression<Func<int, Func<int, int>>> outer =
+    y => x => inner.Compile()(x * y);
+
+var compiled = outer.Compile();
+Console.WriteLine(compiled(3)(2));
+
+```
+
+- A: 16
+- B: 23
+- C: 26
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+The outer expression takes `y` and returns a function that takes `x`.  
+Inside that function, it compiles `inner` (`z => z + 10`) and applies it to `x * y`.  
+When calling `compiled(3)(2)`, `x = 2`, `y = 3`, so `x * y = 6`.  
+The inner function then computes `6 + 10 = 16`.  
+Thus, the final output is `16`.
+
+</p>
+</details>
+
