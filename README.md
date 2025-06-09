@@ -2523,3 +2523,52 @@ Thus, the final output is `16`.
 </p>
 </details>
 
+
+---
+
+###### 60. What's the output?
+
+```csharp
+
+IAlpha a = new Delta();
+IBeta b = new Delta();
+
+a.Speak();
+b.Speak();
+
+interface IAlpha
+{
+    void Speak() => Console.WriteLine("Alpha");
+}
+
+interface IBeta
+{
+    void Speak() => Console.WriteLine("Beta");
+}
+
+class Delta : IAlpha, IBeta
+{
+    // No Speak() implementation
+}
+
+
+```
+
+- A: Alpha then Beta
+- B: Compile-time error
+- C: Runtime exception due to ambiguity
+- D: Alpha twice
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+In C# 8.0+, default interface methods are dispatched based on the interface reference type **at runtime**.
+`a.Speak()` calls the default `IAlpha.Speak()` → prints "Alpha".
+`b.Speak()` calls the default `IBeta.Speak()` → prints "Beta".
+Although `Delta` implements both interfaces with default methods, there is no conflict **until** you try to call `Speak()` on `Delta` directly, which is not done here.
+
+</p>
+</details>
+
