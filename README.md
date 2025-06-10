@@ -2572,3 +2572,43 @@ Although `Delta` implements both interfaces with default methods, there is no co
 </p>
 </details>
 
+
+---
+
+###### 61. What's the output?
+
+```csharp
+
+var obj = new Impl();
+obj.Ping();
+
+
+class Impl : IOne
+{
+    // No explicit override of Ping
+}
+
+interface IOne
+{
+    public void Ping() => Console.WriteLine("One");
+}
+
+```
+
+- A: One
+- B: Compile-time error: Ping is not implemented in Impl
+- C: Runtime error: method not found
+- D: Nothing is printed
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+
+Even though `IOne` provides a default implementation of `Ping()`, the method is **not available via the implementing class directly**.
+Calling `obj.Ping()` requires `Impl` to provide an explicit implementation or for you to cast the object to the interface type.
+To make it work, you could change the call to `((IOne)obj).Ping();`.
+
+</p>
+</details>
+
