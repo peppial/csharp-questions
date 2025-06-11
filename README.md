@@ -2612,3 +2612,46 @@ To make it work, you could change the call to `((IOne)obj).Ping();`.
 </p>
 </details>
 
+
+---
+
+###### 62. What's the output?
+
+```csharp
+
+
+unsafe
+{
+    Span<int> span = stackalloc int[3] { 1, 2, 3 };
+
+    fixed (int* ptr = span)
+    {
+        *(ptr + 1) = 42;
+    }
+
+    Console.WriteLine(string.Join(",", span.ToArray()));
+}
+
+
+```
+
+- A: 1 42 3
+- B: Compile-time error
+- C: Runtime error
+- D: 1 2 3
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+This code uses `stackalloc` to allocate a `Span<int>` on the stack with values {1, 2, 3}. 
+The `fixed` statement pins the memory location of the span's underlying array, so a pointer can be used safely.
+
+Then, the pointer is used to overwrite the second element (`*(ptr + 1) = 42`). 
+As a result, the original span now contains [1, 42, 3], and that is printed.
+
+
+</p>
+</details>
+
