@@ -2655,3 +2655,48 @@ As a result, the original span now contains [1, 42, 3], and that is printed.
 </p>
 </details>
 
+
+
+---
+
+###### 63. What's the output?
+
+```csharp
+
+class Program
+{
+    static int counter = 0;
+
+    static void Main()
+    {
+        Thread t1 = new Thread(() => { for (int i = 0; i < 1000; i++) Interlocked.Increment(ref counter); });
+        Thread t2 = new Thread(() => { for (int i = 0; i < 1000; i++) Interlocked.Increment(ref counter); });
+
+        t1.Start();
+        t2.Start();
+        t1.Join();
+        t2.Join();
+
+        Console.WriteLine(counter);
+    }
+}
+
+```
+
+- A: Between 1000 and 2000
+- B: 1000
+- C: 2000
+- D: Unpredictable
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+
+The `Interlocked.Increment` method performs an atomic operation, ensuring thread-safe incrementing of `counter`.
+Each thread runs 1000 increments, for a total of 2000.
+Atomicity is guaranteed, so no race conditions occur, and the result is exactly 2000.
+
+</p>
+</details>
+
