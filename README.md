@@ -2700,3 +2700,60 @@ Atomicity is guaranteed, so no race conditions occur, and the result is exactly 
 </p>
 </details>
 
+
+---
+
+###### 64. What's the output?
+
+```csharp
+
+interface IProducer<out T>
+{
+    T Produce();
+}
+
+class Animal { public virtual string Speak() => "Animal"; }
+class Dog : Animal { public override string Speak() => "Woof"; }
+
+class DogProducer : IProducer<Dog>
+{
+    public Dog Produce() => new Dog();
+}
+
+class Program
+{
+    static void Main()
+    {
+        IProducer<Dog> dogProducer = new DogProducer();
+        IProducer<Animal> animalProducer = dogProducer; 
+        Console.WriteLine(animalProducer.Produce().Speak());
+    }
+}
+
+```
+
+- A: Compilation error due to invalid assignment
+- B: Runtime InvalidCastException
+- C: "Woof"
+- D: "Animal"
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+
+The `IProducer<out T>` interface is covariant (`out`), allowing `IProducer<Dog>` to be assigned to `IProducer<Animal>`.
+This works because a `Dog` is an `Animal`, and `out` ensures only reading (not writing) of type T.
+The method `Speak()` is overridden in `Dog`, so `"Woof"` is printed.
+
+Covariance allows you to use a more derived type than originally specified.  
+In C#, it's supported in generic interfaces and delegates using the `out` keyword, and it means you can assign something like `IEnumerable<Dog>` to `IEnumerable<Animal>`.  
+It works only for output positions (return values), ensuring type safety by allowing only reading, not writing.
+
+Contravariance allows you to use a more generic (less derived) type than originally specified.
+It's supported in generic interfaces and delegates using the `in` keyword, meaning you can assign `Action<Animal>` to `Action<Dog>`.
+Contravariance works only in input positions (method parameters), allowing safe writing but no reading.
+
+</p>
+</details>
+
