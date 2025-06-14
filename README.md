@@ -2757,3 +2757,50 @@ Contravariance works only in input positions (method parameters), allowing safe 
 </p>
 </details>
 
+
+
+---
+
+###### 65. What's the output?
+
+```csharp
+
+struct Meter
+{
+    public double Value;
+
+    public Meter(double value) => Value = value;
+
+    public static implicit operator Meter(double value) => new Meter(value);
+    public static implicit operator double(Meter m) => m.Value;
+}
+
+class Program
+{
+    static void Main()
+    {
+        Meter m = 5;
+        double d = m + 2.5;
+        Console.WriteLine(d);
+    }
+}
+
+```
+
+- A: 7.5
+- B: Compilation error
+- C: Runtime error
+- D: 5
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+This code defines a `struct` with implicit conversions between `Meter` and `double`.  
+When `m + 2.5` is evaluated, `m` is implicitly converted to `double`, and regular arithmetic is performed.  
+The result `7.5` is printed, showing that both implicit operators work seamlessly.
+
+</p>
+</details>
+
