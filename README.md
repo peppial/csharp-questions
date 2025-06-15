@@ -2757,8 +2757,6 @@ Contravariance works only in input positions (method parameters), allowing safe 
 </p>
 </details>
 
-
-
 ---
 
 ###### 65. What's the output?
@@ -2800,6 +2798,39 @@ class Program
 This code defines a `struct` with implicit conversions between `Meter` and `double`.  
 When `m + 2.5` is evaluated, `m` is implicitly converted to `double`, and regular arithmetic is performed.  
 The result `7.5` is printed, showing that both implicit operators work seamlessly.
+
+</p>
+</details>
+
+---
+
+###### 66. What's the output?
+
+```csharp
+
+Console.WriteLine(Math.Round(2.5));
+Console.WriteLine(Math.Round(13.5));
+
+```
+
+- A: 2  
+14
+- B: 3  
+13
+- C: 3  
+14
+- D: 2  
+13
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+By default, `Math.Round(double)` uses "banker's rounding" (also called "round half to even").  
+This means values ending in `.5` are rounded to the nearest even number.  
+So `2.5` rounds to `2`, and `13.5` rounds to `14`, but due to an error in option D, the correct output is actually:
+
 
 </p>
 </details>
