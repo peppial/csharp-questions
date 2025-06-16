@@ -2835,3 +2835,38 @@ So `2.5` rounds to `2`, and `13.5` rounds to `14`, but due to an error in option
 </p>
 </details>
 
+
+---
+
+###### 67. What's the output?
+
+```csharp
+
+Console.WriteLine(1 + 2 + 'A');
+Console.WriteLine(1 + 'A' + 2);
+Console.WriteLine('A' + 1 + 2);
+
+```
+
+- A: 68, 68, 68
+- B: 68, 68, A12
+- C: 68, A2,  65
+- D: 3A, 1A2, A3
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+In C#, the `'A'` character has an ASCII value of `65`.  
+Integer and `char` values are converted to `int` during arithmetic operations.
+
+- `1 + 2 + 'A'` → `3 + 65 = 68`
+- `1 + 'A' + 2` → `1 + 65 + 2 = 68`
+- `'A' + 1 + 2` → `65 + 1 + 2 = 68`
+
+No string concatenation occurs, as all operands are numeric, so the result is pure integer addition.
+
+</p>
+</details>
+
