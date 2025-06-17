@@ -2835,7 +2835,6 @@ So `2.5` rounds to `2`, and `13.5` rounds to `14`, but due to an error in option
 </p>
 </details>
 
-
 ---
 
 ###### 67. What's the output?
@@ -2866,6 +2865,59 @@ Integer and `char` values are converted to `int` during arithmetic operations.
 - `'A' + 1 + 2` → `65 + 1 + 2 = 68`
 
 No string concatenation occurs, as all operands are numeric, so the result is pure integer addition.
+
+</p>
+</details>
+
+
+---
+
+###### 68. What's the output?
+
+```csharp
+
+interface IBase
+{
+    void Hello() => Console.WriteLine("Hello from IBase");
+}
+
+interface IDerived : IBase
+{
+    void IBase.Hello() => Console.WriteLine("Hello from IDerived");
+}
+
+class MyClass : IDerived { }
+
+class Program
+{
+    static void Main()
+    {
+        IDerived d = new MyClass();
+        ((IBase)d).Hello();
+    }
+}
+
+```
+
+- A: Hello from IBase
+- B: Hello from IDerived
+- C: Compile-time error
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+
+In C# 8.0 and later, interfaces can contain **default implementations** and even **explicit reimplementations** of members from other interfaces.
+
+In this case:
+- `IBase` defines a default implementation of `Hello()`.
+- `IDerived` explicitly reimplements `IBase.Hello()` with a new body.
+
+Even though the call is made through an `IBase` reference, the runtime resolves it to `IDerived`'s explicit implementation because `IDerived` overrides `IBase.Hello()` explicitly.
+
+Hence, it prints: `Hello from IDerived`.
 
 </p>
 </details>
