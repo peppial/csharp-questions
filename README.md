@@ -2922,3 +2922,50 @@ Hence, it prints: `Hello from IDerived`.
 </p>
 </details>
 
+
+
+---
+
+###### 69. What's the output?
+
+```csharp
+
+int value = 5;
+Beta obj = new Beta();
+obj.Process(value);
+
+class Alpha
+{
+    public void Process(int x)
+    {
+        Console.WriteLine("Process from Alpha");
+    }
+}
+
+class Beta : Alpha
+{
+    public void Process(double y)
+    {
+        Console.WriteLine("Process from Beta");
+    }
+}
+
+```
+
+- A: Process from Alpha
+- B: Process from Beta
+- C: Compile-time error
+- D: Runtime exception
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+
+Although `value` is an int, the base class method `Process(int)` is hidden (not overridden) by `Beta.Process(double)`.
+Since `Beta` defines a new method with the same name, overload resolution happens within `Beta`, and `int` is implicitly converted to `double`.
+Therefore, `Beta.Process(double)` is called, and the output is "Process from Beta".
+
+</p>
+</details>
+
