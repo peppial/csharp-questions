@@ -2421,6 +2421,7 @@ class Program
         var a = new { X = 1, Y = 2 };
         var b = new { X = 1, Y = 2 };
 
+        Console.WriteLine(a==b);
         Console.WriteLine(a.Equals(b));
     }
 }
@@ -2429,18 +2430,18 @@ class Program
 
 ```
 
-- A: True
-- B: False
-- C: Compilation error
-- D: Runtime exception
+- A: True and True
+- B: False and True
+- C: False and False
+- D: True and False
 
 <details><summary><b>Answer</b></summary>
 <p>
 
-#### Answer: A
-The output is **`True`**.  
-Anonymous types in C# override `Equals` and `GetHashCode` to provide value-based equality, meaning two instances with the same property names and values are considered equal.  
-Here, both `a` and `b` have identical properties (`X = 1`, `Y = 2`), so `a.Equals(b)` returns `True`.
+#### Answer: B
+Anonymous types in C# automatically override `Equals()` and `GetHashCode()` to compare property values.
+So `a.Equals(b)` returns `true` because both objects have the same values for `X` and `Y`.
+However, `a == b` compares **reference identity** (i.e., are they the same object in memory?), which is `false` since `a` and `b` are two separate instances.
 
 </p>
 </details>
