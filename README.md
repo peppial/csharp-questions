@@ -2970,3 +2970,51 @@ Therefore, `Beta.Process(double)` is called, and the output is "Process from Bet
 </p>
 </details>
 
+
+---
+
+###### 70. What's the output?
+
+```csharp
+
+class Program
+{
+    static async Task TestAsync()
+    {
+        Console.WriteLine("Before Yield");
+        await Task.Yield();
+        Console.WriteLine("After Yield");
+    }
+
+    static void Main()
+    {
+        var task = TestAsync();
+        Console.WriteLine("Main End");
+        task.Wait();
+    }
+}
+```
+
+- A: Before Yield, Main End, After Yield
+- B: Before Yield, After Yield, Main End
+- C: Main End, Before Yield, After Yield
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+
+`Task.Yield()` causes the async method to yield back to the calling context, returning control to the caller immediately.
+
+So:
+- `"Before Yield"` is printed.
+- The method yields.
+- `"Main End"` from `Main()` is printed next.
+- Then, when the continuation resumes, `"After Yield"` is printed.
+
+This makes `Task.Yield()` useful for breaking up long-running async code and avoiding blocking the thread.
+
+</p>
+</details>
+
