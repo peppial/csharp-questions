@@ -3018,3 +3018,41 @@ This makes `Task.Yield()` useful for breaking up long-running async code and avo
 </p>
 </details>
 
+
+---
+
+###### 71. What's the output?
+
+```csharp
+
+var example = new Test(10);
+var field = typeof(Test).GetField("ReadOnlyField");
+field.SetValue(example, 20);
+
+Console.WriteLine($"After applying reflection: {example.ReadOnlyField}");
+public class Test
+{
+    public readonly int ReadOnlyField;
+
+    public Test(int value)
+    {
+        ReadOnlyField = value;
+    }
+}
+
+```
+
+- A: After applying reflection: 10
+- B: After applying reflection: 20
+- C: Runtime error
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+It's possible to use Reflection to change the value of a readonly field, though doing so can lead to unexpected behavior and is generally not recommended as it violates the principle of immutability that readonly keyword is meant to enforce.
+
+</p>
+</details>
+
