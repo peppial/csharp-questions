@@ -3056,3 +3056,50 @@ It's possible to use Reflection to change the value of a readonly field, though 
 </p>
 </details>
 
+
+---
+
+###### 72. What's the output?
+
+```csharp
+
+var s = new MyStruct();
+
+using (s)
+{
+    Console.WriteLine(s.GetDisposed());
+}
+Console.WriteLine(s.GetDisposed());
+
+public struct MyStruct : IDisposable
+{
+    private bool disposed;
+    public void Dispose()
+    {
+        disposed = true;
+    }
+    public bool GetDisposed()
+    {
+        return disposed;
+    }
+}
+
+
+```
+
+- A: True, True
+- B: False, True
+- C: True, False
+- D: False, False
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+When a `struct` is passed to a `using` block, it is **copied** because structs are value types.
+So the `Dispose()` method is called on the **copy**, not the original `s`.
+Therefore, `disposed` inside the original `s` remains `false` both inside and outside the block.
+
+</p>
+</details>
+
