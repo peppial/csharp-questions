@@ -3103,3 +3103,36 @@ Therefore, `disposed` inside the original `s` remains `false` both inside and ou
 </p>
 </details>
 
+
+---
+
+###### 73. What's the output?
+
+```csharp
+
+int a = 0;
+a += Increase();
+Console.WriteLine(a);
+
+int Increase()
+{
+    a = a + 10;
+    return 1;
+}
+
+```
+
+- A: 1
+- B: 10
+- C: 11
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+The output is 1 because a += Increase() is evaluated as a = a + Increase(), where a is read as 0 before calling Increase(), which sets a = 10 internally but returns 1, and finally 0 + 1 is assigned back to a, overwriting the earlier change.
+
+</p>
+</details>
+
