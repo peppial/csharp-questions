@@ -3136,3 +3136,41 @@ The output is 1 because a += Increase() is evaluated as a = a + Increase(), wher
 </p>
 </details>
 
+
+---
+
+###### 74. What's the output?
+
+```csharp
+
+Foo(null);
+Foo(null);
+
+
+void Foo(object a)
+{
+    Console.WriteLine("object");
+}
+void Foo(params object[] args)
+{
+    Console.WriteLine("params");
+}
+
+
+
+```
+
+- A: object, object
+- B: object, params
+- C: params, params
+- D: Compilation error
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+The call Foo(null) is ambiguous because null can be converted to both object and params object[], and the compiler cannot determine which overload is more specific. Since neither method is a better match, it results in a compile-time error.
+
+</p>
+</details>
+
