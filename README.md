@@ -2309,10 +2309,10 @@ public partial class Sample
 
 ```
 
-- A: A
-- B: B
-- C: C
-- D: D
+- A
+- B
+- C
+- D
 
 <details><summary><b>Answer</b></summary>
 <p>
