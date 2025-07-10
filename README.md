@@ -5,11 +5,11 @@
 <div align="center">
 From fundamentals to advanced, this C# quiz can test your knowledge, refresh your skills, or help prepare for a coding interview! 🚀
 
-Answers are provided in collapsible sections below each question — just click to expand. Have fun, and good luck!
+Answers are provided in collapsible sections below each question — just click to expand.
 
 In a quiz (5-10 randomly selected questions), you can test yourself here: [https://dotnetrends.net/quiz/](https://dotnetrends.net/quiz/)
 
-Any comments and suggestions are more than welcome.
+ Have fun, and good luck! Any comments and suggestions are more than welcome.
 </div>
 
 ---
