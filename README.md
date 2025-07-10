@@ -1034,7 +1034,7 @@ class Program
 <details><summary><b>Answer</b></summary>
 <p>
 
-#### Answer: A
+#### Answer: B
 The LINQ query uses deferred execution, so counter++ is not evaluated until the query is enumerated.  
 When query.Reverse() is executed, it forces evaluation of Select, incrementing counter as it maps 0, 1, 2 (in order), and then reverses the result to 2, 1, 0.
 </p>
