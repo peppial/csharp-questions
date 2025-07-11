@@ -3005,7 +3005,7 @@ class Program
 <details><summary><b>Answer</b></summary>
 <p>
 
-#### Answer: B
+#### Answer: A
 
 `Task.Yield()` causes the async method to yield back to the calling context, returning control to the caller immediately.
 
