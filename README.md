@@ -10,6 +10,8 @@ Answers are provided in collapsible sections below each question — just click 
 In a quiz (5-10 randomly selected questions), you can test yourself here: [https://dotnetrends.net/quiz/](https://dotnetrends.net/quiz/)
 
  Have fun, and good luck! Any comments and suggestions are more than welcome.
+ 
+ **.NET Trends** [X (formerly Twitter)](https://x.com/DotNetTrends) | [LinkedIn](https://www.linkedin.com/groups/9804613/)
 </div>
 
 ---
