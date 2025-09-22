@@ -3160,8 +3160,6 @@ void Foo(params object[] args)
     Console.WriteLine("params");
 }
 
-
-
 ```
 
 - A: object, object
@@ -3174,6 +3172,50 @@ void Foo(params object[] args)
 
 #### Answer: D
 The call Foo(null) is ambiguous because null can be converted to both object and params object[], and the compiler cannot determine which overload is more specific. Since neither method is a better match, it results in a compile-time error.
+
+</p>
+</details>
+
+
+
+---
+
+###### 75. What runtime behavior can occur when this code is executed, and why?
+
+```csharp
+
+private static IEnumerable<Error> VerifyProductQuantities(
+    List<ProductStock> products,
+    Dictionary<string, Domain.Entities.ProductStock> stocks)
+{
+    foreach (var product in products)
+    {
+        if (!stocks.TryGetValue(product.ProductName, out var stock))
+        {
+            yield return StockErrors.ProductNotFound(product.ProductName);
+        }
+
+        Console.WriteLine(stock);
+    }
+}
+
+
+```
+
+- A: No exception will occur — stock is always assigned by TryGetValue, so it’s safe to use.
+- B: A NullReferenceException might occur at Console.WriteLine(stock) if the dictionary contains a key with a null value or if TryGetValue failed and stock was left uninitialized.
+- C: A NullReferenceException might occur at Console.WriteLine(stock) only if ProductStock is a reference type, because the compiler doesn’t guarantee that stock is non-null after the yield return.
+- D: An InvalidOperationException will occur because yield return cannot be mixed with Console.WriteLine.
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: C
+Because yield return does not stop the loop from executing further.
+Unlike return, which ends the method immediately, yield return just pauses and gives back one item.
+The loop continues running after that point.
+That’s why in cases where you want to skip an iteration, you need **continue**.
+Otherwise, execution continues, and you may run into unexpected results and exceptions.
 
 </p>
 </details>
