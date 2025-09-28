@@ -1,10 +1,11 @@
-# Mid-Level C# Quiz Questions
+# Mid+ Level C# Quiz Questions
 
-Test your intermediate C# knowledge with these carefully selected questions covering important concepts like async/await, LINQ, generics, inheritance, and more.
+Test your Mid+ C# knowledge with these carefully selected questions covering important concepts like async/await, LINQ, generics, inheritance, and more.
 
-## Question 1: Array Reference vs Value
 
-What's the output?
+
+---
+###### 1. What's the output?
 
 ```csharp
 class Program
@@ -24,19 +25,69 @@ class Program
 }
 ```
 
-**Options:**
 - A: Array is not null, Length: 3
 - B: Array is not null, Length: 0
 - C: Array is null
 - D: Not all code paths return a value
 
-[**Answer**](#answer-1-array-reference-vs-value)
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+In C#, method parameters are passed by value by default.
+For reference types (like classes and arrays), the reference itself is passed by value - meaning <b>the method receives a copy of the reference</b>, not the original reference. However, both references point to the same object in memory, so changes to the object's properties within the method will be visible outside the method.
+
+When you call ModifyArray(numbers); the value of the reference (a pointer to the array in memory) is copied into the method parameter arr.
+So now, inside the method: <b>arr is a copy of the reference</b> to the original array numbers.
+If you do arr = null;, you're only modifying the copy, not the original. The original numbers in Main() remains untouched.
+
+</p>
+</details>
 
 ---
+###### 2. What's the output?
 
-## Question 2: Lambda Closure
+```csharp
+class Program
+{
+    static object _lock = new object();
 
-What's the output?
+    static async Task Main()
+    {
+        DoWorkAsync();
+    }
+
+    static async Task DoWorkAsync()
+    {
+        lock (_lock)
+        {
+            Console.WriteLine("Entered lock");
+            await Task.Delay(1000);
+            Console.WriteLine("Leaving lock");
+        }
+    }
+}
+```
+
+- A: Entered lock, Leaving lock
+- B: A deadlock
+- C: No output
+- D: Cannot await in the body of a lock statement
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+When you await inside a lock, you risk not releasing the lock immediately.
+When the method resumes, it might do so on a <b>different thread</b> that didn’t acquire the lock originally, violating the Monitor’s rules.
+This is why the compiler doesn't even let you do it. It throws an error to protect you from unsafe behaivour.
+
+Instead, you should use <b>SemaphoreSlim</b>.
+</p>
+</details>
+
+---
+###### 3. What's the output?
 
 ```csharp
 class Program
@@ -59,29 +110,195 @@ class Program
 }
 ```
 
-**Options:**
-- A: Lambda captured: 0 Lambda captured: 1 Lambda captured: 2
-- B: Lambda captured: 3 Lambda captured: 3 Lambda captured: 3
-- C: Lambda captured: 2 Lambda captured: 2 Lambda captured: 2
+- A: Lambda captured: 0
+     Lambda captured: 1
+     Lambda captured: 2
+- B: Lambda captured: 3
+     Lambda captured: 3
+     Lambda captured: 3
+- C: Lambda captured: 2
+     Lambda captured: 2
+     Lambda captured: 2
 - D: Compiler error
 
-[**Answer**](#answer-2-lambda-closure)
+<details><summary><b>Answer</b></summary>
+<p>
 
----
+#### Answer: B
+Each lambda is capturing the variable i, not its value. The variable i is declared outside the lambda, and the lambda holds a reference to it.
+When the foreach runs the lambdas, the loop has already finished — and i == 3. So, the lambdas don’t capture 0, 1, 2 — they all reference the same variable, and its final value is 3.
 
-## Question 3: Async/Await Exception Handling
-
-What's the output?
+To fix it introduce a variable in the loop:
 
 ```csharp
+for (int i = 0; i < 3; i++)
+{
+    int copy = i; // 👈 new variable per iteration
+    actions.Add(() => Console.WriteLine($"Lambda captured: {copy}"));
+}
+```
+
+</p>
+</details>
+
+
+---
+###### 4. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        SomethingAsync();
+        Console.WriteLine("Hello World!");
+    }
+
+    static async void SomethingAsync()
+    {
+        await Task.Delay(1000);
+        throw new Exception("Exception");
+    }
+}
+```
+
+- A: The application crashes
+- B: Hello World!
+- C: Compiler error
+- D: Hello World! and the application crashes.
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: B
+When you call an async void method, it behaves like fire-and-forget. Control immediately returns to the caller — in this case, back to Main() — without waiting for the await to finish. Meanwhile, the await Task.Delay(1000) delays execution for 1 second.
+After that delay, the exception should be thrown — but by that time, Main has already printed the message and the application has exited.
+
+</p>
+</details>
+
+
+---
+###### 5. What's the output?
+
+```csharp
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = [ 1, 2, 3 ];
+
+        ModifyArray(numbers);
+        Console.WriteLine(string.Join(", ", numbers));
+
+        ResetArray(numbers);
+        Console.WriteLine(string.Join(", ", numbers));
+    }
+
+    static void ModifyArray(int[] arr)
+    {
+        arr[0] = 99;
+    }
+
+    static void ResetArray(int[] arr)
+    {
+        arr = [0,0,0];
+    }
+}
+
+```
+
+- A: <br>1, 2, 3<br>
+     1, 2, 3
+- B: <br>1, 2, 3<br>
+     0, 0, 0
+- C: <br>99, 2, 3<br>
+     0, 0, 0
+- D: <br>99, 2, 3<br>
+     99, 2, 3
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+In ResetArray, arr is a copy of the reference to numbers.
+When we assign arr = [ 0, 0, 0 ], we are changing the local variable arr to point to a new array. But this change <b>is not visible to the caller</b>. The original numbers array is unchanged. So numbers still points to the array with values: 99, 2, 3.
+
+</p>
+</details>
+
+
+
+
+---
+###### 6. What's the output?
+
+```csharp
+
+class Counter
+{
+    public static int Count = 0;
+
+    public static void Increment()
+    {
+        for (int i = 0; i < 1_000_000; i++)
+        {
+            Count++;
+        }
+    }
+}
+
+class Program
+{
+    static async Task Main()
+    {
+        var task1 = Task.Run(() => Counter.Increment());
+        var task2 = Task.Run(() => Counter.Increment());
+
+        await Task.WhenAll(task1, task2);
+
+        Console.WriteLine($"Final Count: {Counter.Count}");
+    }
+}
+
+
+```
+
+- A: Final Count: 1000000
+- B: Final Count: 2000000
+- C: More than 2000000
+- D: Less than 2000000
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+
+The Count++ operation is not thread-safe, as it involves a read-modify-write sequence that can be interrupted by other threads.
+Since both tasks run concurrently, increments may overlap, leading to lost updates and a final count less than 2000000. This happens because the static field is shared across threads, and no synchronization (like Interlocked or lock) is used.
+
+
+</p>
+</details>
+
+
+
+---
+###### 7. What's the output?
+
+```csharp
+
 class Program
 {
     static async Task Main()
     {
         try
         {
-            var task = ThrowingMethodAsync();
-            Console.WriteLine("Task started, waiting for it to complete...");
+            ThrowingTask();
+            Console.WriteLine("Main continues...");
+            await Task.Delay(2000);
         }
         catch (Exception ex)
         {
@@ -89,119 +306,38 @@ class Program
         }
     }
 
-    static async Task ThrowingMethodAsync()
+    static async Task ThrowingTask()
     {
-        await Task.Delay(1000);
-        throw new InvalidOperationException("Something went wrong");
+        await Task.Delay(500);
+        throw new InvalidOperationException("Boom!");
     }
 }
+
+
 ```
 
-**Options:**
-- A: Task started, waiting for it to complete... Something went wrong
-- B: Something went wrong
-- C: Task started, waiting for it to complete...
-- D: The application crashes
+- A: Main continues.. Caught: Boom!
+- B: Main continues..
+- C: No output
+- D: Main continues.. Application crashes
 
-[**Answer**](#answer-3-asyncawait-exception-handling)
+<details><summary><b>Answer</b></summary>
+<p>
 
----
+#### Answer: B or D
 
-## Question 4: String Interning
+The exception in ThrowingTask is thrown on a background thread, but since the task is <b>not awaited</b>, the exception is never observed by the Main method’s try-catch. Unobserved task exceptions can crash the application or be silently ignored, depending on the runtime and .NET version. This is why fire-and-forget tasks should be avoided unless properly handled, e.g., with logging or exception capturing.
 
-What's the output?
 
-```csharp
-class Program
-{
-    static void Main()
-    {
-        string a = "hello";
-        string b = "he" + "llo";
-        string c = string.Concat("he", "llo");
-        string d = new string("hello".ToCharArray());
+</p>
+</details>
 
-        Console.WriteLine(object.ReferenceEquals(a, b));
-        Console.WriteLine(object.ReferenceEquals(a, c));
-        Console.WriteLine(object.ReferenceEquals(a, d));
-    }
-}
-```
-
-**Options:**
-- A: True, False, False
-- B: True, True, True
-- C: False, False, False
-- D: True, True, False
-
-[**Answer**](#answer-4-string-interning)
 
 ---
-
-## Question 5: Static Field Initialization Order
-
-What's the output?
+###### 8. What's the output?
 
 ```csharp
-class Program
-{
-    private static int a = b;
-    private static int b = 10;
 
-    static void Main()
-    {
-        Console.WriteLine(a);
-    }
-}
-```
-
-**Options:**
-- A: 10
-- B: Use of unassigned local variable 'b'
-- C: Runtime Error
-- D: 0
-
-[**Answer**](#answer-5-static-field-initialization-order)
-
----
-
-## Question 6: Span and Memory
-
-What's the output?
-
-```csharp
-class Program
-{
-    static void Main()
-    {
-        int[] numbers = [ 1, 2, 3, 4, 5 ];
-        Span<int> slice = numbers.AsSpan(1, 3);
-
-        for (int i = 0; i < slice.Length; i++)
-        {
-            slice[i] *= 2;
-        }
-
-        Console.WriteLine(string.Join(", ", numbers));
-    }
-}
-```
-
-**Options:**
-- A: 2, 4, 6, 4, 5
-- B: 1, 4, 6, 8, 5
-- C: 1, 2, 3, 4, 5
-- D: Compile-time error: cannot slice an array with Span
-
-[**Answer**](#answer-6-span-and-memory)
-
----
-
-## Question 7: Virtual vs New Methods
-
-What's the output?
-
-```csharp
 class Base
 {
     public virtual void Show() => Console.WriteLine("Base.Show");
@@ -220,52 +356,32 @@ class Program
         obj.Show();
     }
 }
+
 ```
 
-**Options:**
 - A: Runtime error
 - B: Derived.Show
 - C: No Output
 - D: Base.Show
 
-[**Answer**](#answer-7-virtual-vs-new-methods)
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+Base declares a virtual method Show().
+Derived hides (not overrides!) the Show() method by declaring public void Show() without using the override keyword.
+At runtime, you're calling obj.Show() where obj is of type Base — and since method hiding (via new) is resolved by the compile-time type, Base.Show() is called, not Derived.Show().
+
+To get polymorphic behavior (Derived.Show()), the method in Derived must be marked with override. Otherwise, it hides the base method, and calls are resolved by the reference type — not the instance type.</p>
+</details>
+
 
 ---
-
-## Question 8: Boxing and Reference Equality
-
-What's the output?
+###### 9. What's the output?
 
 ```csharp
-struct S { }
 
-class Program
-{
-    static void Main()
-    {
-        S s = new S();
-        object o1 = s;
-        object o2 = s;
-        Console.WriteLine(object.ReferenceEquals(o1, o2));
-    }
-}
-```
 
-**Options:**
-- A: True
-- B: False
-- C: Runtime exception
-- D: Compiler error
-
-[**Answer**](#answer-8-boxing-and-reference-equality)
-
----
-
-## Question 9: LINQ Deferred Execution
-
-What's the output?
-
-```csharp
 class Program
 {
     static void Main()
@@ -279,332 +395,65 @@ class Program
             Console.Write(n + " ");
     }
 }
-```
 
-**Options:**
+```
 - A: 4 16
 - B: 100 144
 - C: Nothing (empty output)
 - D: Throws an exception
 
-[**Answer**](#answer-9-linq-deferred-execution)
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+LINQ uses <b>deferred execution</b>, meaning the query is not evaluated when defined, but only when enumerated inside foreach.
+However, numbers was reassigned to a new range (10–14), and the query still refers to the <b>old enumerable (1–5)</b> because Enumerable.Range(1,5) produces an immutable sequence.
+Thus, the original even numbers 2 and 4 are selected, squared to 4 and 16, and the output is 4 16.
+</p>
+</details>
+
 
 ---
 
-## Question 10: Async void vs Task
-
-What's the output?
+###### 10. What's the output?
 
 ```csharp
-class Program
-{
-    static void Main()
-    {
-        SomethingAsync();
-        Console.WriteLine("Hello World!");
-    }
-
-    static async void SomethingAsync()
-    {
-        await Task.Delay(1000);
-        throw new Exception("Exception");
-    }
-}
-```
-
-**Options:**
-- A: The application crashes
-- B: Hello World!
-- C: Compiler error
-- D: Hello World! and the application crashes.
-
-[**Answer**](#answer-10-async-void-vs-task)
-
----
-
-## Question 11: Record Equality
-
-What's the output?
-
-```csharp
-record Person(string Name);
-record Employee(string Name) : Person(Name);
 
 class Program
 {
-    static void Main()
+    private static object sobject = new();
+
+    private static void Write()
     {
-        Person p1 = new Person("Alice");
-        Person p2 = new Employee("Alice");
-
-        Console.WriteLine(p1 == p2);
-        Console.WriteLine(ReferenceEquals(p1, p2));
-    }
-}
-```
-
-**Options:**
-- A: Compilation error
-- B: True, True
-- C: False, False
-- D: True, False
-
-[**Answer**](#answer-11-record-equality)
-
----
-
-## Question 12: Pattern Matching with Records
-
-What's the output?
-
-```csharp
-record Shape;
-record Circle(double Radius) : Shape;
-record Rectangle(double Width, double Height) : Shape;
-
-class Program
-{
-    static void Main()
-    {
-        Shape s = new Circle(5);
-
-        string result = s switch
+        lock (sobject)
         {
-            Rectangle { Width: > 0, Height: > 0 } => "Rectangle",
-            Circle { Radius: > 10 } => "Large Circle",
-            Circle => "Small Circle",
-            _ => "Unknown"
-        };
+            Console.WriteLine("test");
+        }
+    }
 
-        Console.WriteLine(result);
+    static void Main(string[] args)
+    {
+        lock (sobject)
+        {
+            Write();
+        }
     }
 }
+
 ```
 
-**Options:**
-- A: Rectangle
-- B: Large Circle
-- C: Small Circle
-- D: Unknown
+- A: The program will hang (deadlock)
+- B: Runtime error
+- C: Complication error
+- D: test
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: D
+The lock statement uses a <b>reentrant lock</b>, meaning the <b>same thread</b> can acquire the lock multiple times without deadlocking.
+So, when Main locks sobject and calls Write(), which also locks sobject, it does not cause a deadlock.
+The program safely prints "test" once.
+</p>
+</details>
 
-[**Answer**](#answer-12-pattern-matching-with-records)
-
----
-
-## Question 13: Generic Static Fields
-
-What's the output?
-
-```csharp
-Foo<int>.Count++;
-Console.WriteLine(Foo<double>.Count);
-
-class Foo<T>
-{
-    public static int Count;
-}
-```
-
-**Options:**
-- A: 0
-- B: 1
-- C: Compilation Error
-- D: Runtime error
-
-[**Answer**](#answer-13-generic-static-fields)
-
----
-
-## Question 14: Exception Hierarchy
-
-What's the output?
-
-```csharp
-try
-{
-    var array = new int[] { 1, 2 };
-    Console.Write(array[5]);
-}
-catch(ApplicationException e)
-{
-    Console.Write(1);
-}
-catch(SystemException e)
-{
-    Console.Write(2);
-}
-catch(Exception e)
-{
-    Console.Write(3);
-}
-```
-
-**Options:**
-- A: 1
-- B: 2
-- C: 3
-- D: Runtime error
-
-[**Answer**](#answer-14-exception-hierarchy)
-
----
-
-## Question 15: Method Overload Resolution
-
-What's the output?
-
-```csharp
-object o = "hello";
-A.Print(o);
-
-class A
-{
-    public static void Print<T>(T value) => Console.WriteLine("Generic");
-    public static void Print(string value) => Console.WriteLine("String");
-}
-```
-
-**Options:**
-- A: Exception is thrown
-- B: Compilation error
-- C: Generic
-- D: String
-
-[**Answer**](#answer-15-method-overload-resolution)
-
----
-
-# Answers
-
-## Answer 1: Array Reference vs Value
-
-**A: Array is not null, Length: 3**
-
-Arrays are reference types, but when you pass an array to a method, you're passing the reference by value. Setting `arr = null` inside the method only affects the local parameter, not the original reference.
-
-[**Back**](#question-1-array-reference-vs-value)
-
-## Answer 2: Lambda Closure
-
-**B: Lambda captured: 3 Lambda captured: 3 Lambda captured: 3**
-
-The lambda captures the variable `i` by reference, not by value. When the loop completes, `i` equals 3, so all lambdas output the same value.
-
-[**Back**](#question-2-lambda-closure)
-
-## Answer 3: Async/Await Exception Handling
-
-**C: Task started, waiting for it to complete...**
-
-The task is created but not awaited, so the exception remains unobserved. The try-catch only catches synchronous exceptions from the task creation, not from the task execution.
-
-[**Back**](#question-3-asyncawait-exception-handling)
-
-## Answer 4: String Interning
-
-**D: True, True, False**
-
-Compile-time string concatenation and `string.Concat` with literals are interned, but `new string()` creates a new instance on the heap.
-
-[**Back**](#question-4-string-interning)
-
-## Answer 5: Static Field Initialization Order
-
-**D: 0**
-
-Static fields are initialized in declaration order. When `a = b` is evaluated, `b` hasn't been initialized yet, so it has its default value of 0.
-
-[**Back**](#question-5-static-field-initialization-order)
-
-## Answer 6: Span and Memory
-
-**B: 1, 4, 6, 8, 5**
-
-`Span<T>` provides a view over the original array. Changes through the span affect the underlying array. The slice starts at index 1 with length 3.
-
-[**Back**](#question-6-span-and-memory)
-
-## Answer 7: Virtual vs New Methods
-
-**D: Base.Show**
-
-`Derived.Show()` hides the base method but doesn't override it (missing `override` keyword). Since the reference is `Base`, the base method is called.
-
-[**Back**](#question-7-virtual-vs-new-methods)
-
-## Answer 8: Boxing and Reference Equality
-
-**B: False**
-
-Each assignment to `object` boxes the struct into a new object on the heap. `o1` and `o2` are different object instances.
-
-[**Back**](#question-8-boxing-and-reference-equality)
-
-## Answer 9: LINQ Deferred Execution
-
-**A: 4 16**
-
-LINQ queries are executed when enumerated, not when defined. The query captures the original `numbers` reference (1-5), not the new one (10-14).
-
-[**Back**](#question-9-linq-deferred-execution)
-
-## Answer 10: Async void vs Task
-
-**B: Hello World!**
-
-`async void` methods are fire-and-forget. The exception is thrown on a different thread context and doesn't crash the main thread.
-
-[**Back**](#question-10-async-void-vs-task)
-
-## Answer 11: Record Equality
-
-**C: False, False**
-
-Records of different types are never equal, even if they have the same property values. They're also different object instances.
-
-[**Back**](#question-11-record-equality)
-
-## Answer 12: Pattern Matching with Records
-
-**C: Small Circle**
-
-The Circle with Radius 5 doesn't match the "Large Circle" pattern (Radius > 10), so it matches the general `Circle` pattern.
-
-[**Back**](#question-12-pattern-matching-with-records)
-
-## Answer 13: Generic Static Fields
-
-**A: 0**
-
-Each generic type instantiation has its own copy of static fields. `Foo<int>.Count` and `Foo<double>.Count` are separate fields.
-
-[**Back**](#question-13-generic-static-fields)
-
-## Answer 14: Exception Hierarchy
-
-**B: 2**
-
-`IndexOutOfRangeException` inherits from `SystemException`, which is caught by the second catch block.
-
-[**Back**](#question-14-exception-hierarchy)
-
-## Answer 15: Method Overload Resolution
-
-**C: Generic**
-
-The compile-time type of `o` is `object`, so the generic method `Print<T>(T value)` is selected over the specific `Print(string)` overload.
-
-[**Back**](#question-15-method-overload-resolution)
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
