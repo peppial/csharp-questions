@@ -30,6 +30,8 @@ class Program
 - C: Array is null
 - D: Not all code paths return a value
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 2: Lambda Closure
@@ -62,6 +64,8 @@ class Program
 - B: Lambda captured: 3 Lambda captured: 3 Lambda captured: 3
 - C: Lambda captured: 2 Lambda captured: 2 Lambda captured: 2
 - D: Compiler error
+
+[**Answer**](#answers)
 
 ---
 
@@ -99,6 +103,8 @@ class Program
 - C: Task started, waiting for it to complete...
 - D: The application crashes
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 4: String Interning
@@ -128,6 +134,8 @@ class Program
 - C: False, False, False
 - D: True, True, False
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 5: Static Field Initialization Order
@@ -152,6 +160,8 @@ class Program
 - B: Use of unassigned local variable 'b'
 - C: Runtime Error
 - D: 0
+
+[**Answer**](#answers)
 
 ---
 
@@ -182,6 +192,8 @@ class Program
 - B: 1, 4, 6, 8, 5
 - C: 1, 2, 3, 4, 5
 - D: Compile-time error: cannot slice an array with Span
+
+[**Answer**](#answers)
 
 ---
 
@@ -216,6 +228,8 @@ class Program
 - C: No Output
 - D: Base.Show
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 8: Boxing and Reference Equality
@@ -242,6 +256,8 @@ class Program
 - B: False
 - C: Runtime exception
 - D: Compiler error
+
+[**Answer**](#answers)
 
 ---
 
@@ -270,6 +286,8 @@ class Program
 - B: 100 144
 - C: Nothing (empty output)
 - D: Throws an exception
+
+[**Answer**](#answers)
 
 ---
 
@@ -300,6 +318,8 @@ class Program
 - C: Compiler error
 - D: Hello World! and the application crashes.
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 11: Record Equality
@@ -328,6 +348,8 @@ class Program
 - B: True, True
 - C: False, False
 - D: True, False
+
+[**Answer**](#answers)
 
 ---
 
@@ -365,6 +387,8 @@ class Program
 - C: Small Circle
 - D: Unknown
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 13: Generic Static Fields
@@ -386,6 +410,8 @@ class Foo<T>
 - B: 1
 - C: Compilation Error
 - D: Runtime error
+
+[**Answer**](#answers)
 
 ---
 
@@ -419,6 +445,8 @@ catch(Exception e)
 - C: 3
 - D: Runtime error
 
+[**Answer**](#answers)
+
 ---
 
 ## Question 15: Method Overload Resolution
@@ -442,6 +470,8 @@ class A
 - C: Generic
 - D: String
 
+[**Answer**](#answers)
+
 ---
 
 # Answers
@@ -452,11 +482,15 @@ class A
 
 Arrays are reference types, but when you pass an array to a method, you're passing the reference by value. Setting `arr = null` inside the method only affects the local parameter, not the original reference.
 
+[**Back**](#question-1-array-reference-vs-value)
+
 ## Answer 2: Lambda Closure
 
 **B: Lambda captured: 3 Lambda captured: 3 Lambda captured: 3**
 
 The lambda captures the variable `i` by reference, not by value. When the loop completes, `i` equals 3, so all lambdas output the same value.
+
+[**Back**](#question-2-lambda-closure)
 
 ## Answer 3: Async/Await Exception Handling
 
@@ -464,11 +498,15 @@ The lambda captures the variable `i` by reference, not by value. When the loop c
 
 The task is created but not awaited, so the exception remains unobserved. The try-catch only catches synchronous exceptions from the task creation, not from the task execution.
 
+[**Back**](#question-3-asyncawait-exception-handling)
+
 ## Answer 4: String Interning
 
 **D: True, True, False**
 
 Compile-time string concatenation and `string.Concat` with literals are interned, but `new string()` creates a new instance on the heap.
+
+[**Back**](#question-4-string-interning)
 
 ## Answer 5: Static Field Initialization Order
 
@@ -476,11 +514,15 @@ Compile-time string concatenation and `string.Concat` with literals are interned
 
 Static fields are initialized in declaration order. When `a = b` is evaluated, `b` hasn't been initialized yet, so it has its default value of 0.
 
+[**Back**](#question-5-static-field-initialization-order)
+
 ## Answer 6: Span and Memory
 
 **B: 1, 4, 6, 8, 5**
 
 `Span<T>` provides a view over the original array. Changes through the span affect the underlying array. The slice starts at index 1 with length 3.
+
+[**Back**](#question-6-span-and-memory)
 
 ## Answer 7: Virtual vs New Methods
 
@@ -488,11 +530,15 @@ Static fields are initialized in declaration order. When `a = b` is evaluated, `
 
 `Derived.Show()` hides the base method but doesn't override it (missing `override` keyword). Since the reference is `Base`, the base method is called.
 
+[**Back**](#question-7-virtual-vs-new-methods)
+
 ## Answer 8: Boxing and Reference Equality
 
 **B: False**
 
 Each assignment to `object` boxes the struct into a new object on the heap. `o1` and `o2` are different object instances.
+
+[**Back**](#question-8-boxing-and-reference-equality)
 
 ## Answer 9: LINQ Deferred Execution
 
@@ -500,11 +546,15 @@ Each assignment to `object` boxes the struct into a new object on the heap. `o1`
 
 LINQ queries are executed when enumerated, not when defined. The query captures the original `numbers` reference (1-5), not the new one (10-14).
 
+[**Back**](#question-9-linq-deferred-execution)
+
 ## Answer 10: Async void vs Task
 
 **B: Hello World!**
 
 `async void` methods are fire-and-forget. The exception is thrown on a different thread context and doesn't crash the main thread.
+
+[**Back**](#question-10-async-void-vs-task)
 
 ## Answer 11: Record Equality
 
@@ -512,11 +562,15 @@ LINQ queries are executed when enumerated, not when defined. The query captures 
 
 Records of different types are never equal, even if they have the same property values. They're also different object instances.
 
+[**Back**](#question-11-record-equality)
+
 ## Answer 12: Pattern Matching with Records
 
 **C: Small Circle**
 
 The Circle with Radius 5 doesn't match the "Large Circle" pattern (Radius > 10), so it matches the general `Circle` pattern.
+
+[**Back**](#question-12-pattern-matching-with-records)
 
 ## Answer 13: Generic Static Fields
 
@@ -524,15 +578,21 @@ The Circle with Radius 5 doesn't match the "Large Circle" pattern (Radius > 10),
 
 Each generic type instantiation has its own copy of static fields. `Foo<int>.Count` and `Foo<double>.Count` are separate fields.
 
+[**Back**](#question-13-generic-static-fields)
+
 ## Answer 14: Exception Hierarchy
 
 **B: 2**
 
 `IndexOutOfRangeException` inherits from `SystemException`, which is caught by the second catch block.
 
+[**Back**](#question-14-exception-hierarchy)
+
 ## Answer 15: Method Overload Resolution
 
 **C: Generic**
 
 The compile-time type of `o` is `object`, so the generic method `Print<T>(T value)` is selected over the specific `Print(string)` overload.
+
+[**Back**](#question-15-method-overload-resolution)
 
