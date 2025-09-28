@@ -4,6 +4,8 @@ Test your Mid+ C# knowledge with these carefully selected questions covering imp
 
 
 
+ **.NET Trends** [X (formerly Twitter)](https://x.com/DotNetTrends) | [LinkedIn](https://www.linkedin.com/groups/9804613/)
+ 
 ---
 ###### 1. What's the output?
 
