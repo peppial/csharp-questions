@@ -30,7 +30,7 @@ class Program
 - C: Array is null
 - D: Not all code paths return a value
 
-[**Answer**](#answers)
+[**Answer**](#answer-1-array-reference-vs-value)
 
 ---
 
@@ -65,7 +65,7 @@ class Program
 - C: Lambda captured: 2 Lambda captured: 2 Lambda captured: 2
 - D: Compiler error
 
-[**Answer**](#answers)
+[**Answer**](#answer-2-lambda-closure)
 
 ---
 
@@ -103,7 +103,7 @@ class Program
 - C: Task started, waiting for it to complete...
 - D: The application crashes
 
-[**Answer**](#answers)
+[**Answer**](#answer-3-asyncawait-exception-handling)
 
 ---
 
@@ -134,7 +134,7 @@ class Program
 - C: False, False, False
 - D: True, True, False
 
-[**Answer**](#answers)
+[**Answer**](#answer-4-string-interning)
 
 ---
 
@@ -161,7 +161,7 @@ class Program
 - C: Runtime Error
 - D: 0
 
-[**Answer**](#answers)
+[**Answer**](#answer-5-static-field-initialization-order)
 
 ---
 
@@ -193,7 +193,7 @@ class Program
 - C: 1, 2, 3, 4, 5
 - D: Compile-time error: cannot slice an array with Span
 
-[**Answer**](#answers)
+[**Answer**](#answer-6-span-and-memory)
 
 ---
 
@@ -228,7 +228,7 @@ class Program
 - C: No Output
 - D: Base.Show
 
-[**Answer**](#answers)
+[**Answer**](#answer-7-virtual-vs-new-methods)
 
 ---
 
@@ -257,7 +257,7 @@ class Program
 - C: Runtime exception
 - D: Compiler error
 
-[**Answer**](#answers)
+[**Answer**](#answer-8-boxing-and-reference-equality)
 
 ---
 
@@ -287,7 +287,7 @@ class Program
 - C: Nothing (empty output)
 - D: Throws an exception
 
-[**Answer**](#answers)
+[**Answer**](#answer-9-linq-deferred-execution)
 
 ---
 
@@ -318,7 +318,7 @@ class Program
 - C: Compiler error
 - D: Hello World! and the application crashes.
 
-[**Answer**](#answers)
+[**Answer**](#answer-10-async-void-vs-task)
 
 ---
 
@@ -349,7 +349,7 @@ class Program
 - C: False, False
 - D: True, False
 
-[**Answer**](#answers)
+[**Answer**](#answer-11-record-equality)
 
 ---
 
@@ -387,7 +387,7 @@ class Program
 - C: Small Circle
 - D: Unknown
 
-[**Answer**](#answers)
+[**Answer**](#answer-12-pattern-matching-with-records)
 
 ---
 
@@ -411,7 +411,7 @@ class Foo<T>
 - C: Compilation Error
 - D: Runtime error
 
-[**Answer**](#answers)
+[**Answer**](#answer-13-generic-static-fields)
 
 ---
 
@@ -445,7 +445,7 @@ catch(Exception e)
 - C: 3
 - D: Runtime error
 
-[**Answer**](#answers)
+[**Answer**](#answer-14-exception-hierarchy)
 
 ---
 
@@ -470,7 +470,7 @@ class A
 - C: Generic
 - D: String
 
-[**Answer**](#answers)
+[**Answer**](#answer-15-method-overload-resolution)
 
 ---
 
