@@ -7,7 +7,7 @@ From fundamentals to advanced, this C# quiz can test your knowledge, refresh you
 
 Answers are provided in collapsible sections below each question — just click to expand.
 
-In a quiz (5-10 randomly selected questions), you can test yourself here: [https://dotnetrends.net/quiz/](https://dotnetrends.net/quiz/)
+In a quiz (5-10 randomly selected questions), you can test yourself here: [https://dotnetrends.ermena.com/quiz/](https://dotnetrends.ermena.com/quiz/)
 
  Have fun, and good luck! Any comments and suggestions are more than welcome.
  
