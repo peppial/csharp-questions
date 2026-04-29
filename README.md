@@ -3250,3 +3250,35 @@ This is different from typical custom reference types, which use reference equal
 
 </p>
 </details>
+---
+###### 77. What's the output of GetAsync()?
+
+```csharp
+   static Task<string?> GetAsync() =>
+      NullAsync() ?? throw new Exception();  
+
+	static async Task<string?> NullAsync()
+	{
+		await Task.Delay(1);
+		return null;           
+	}
+```
+
+- A: No output (null)
+- B: Exception
+- C: Code does not complile
+
+
+<details><summary><b>Answer</b></summary>
+<p>
+
+#### Answer: A
+
+NullAsync() returns a **Task<string?> object** — and that object is never null. The ?? operator checks if the Task reference is null, not the Task's result. It isn't, so the exception is never thrown.
+The returned Task eventually resolves to null, but by then the ?? check is long gone.
+To actually guard against a null result, you need to await first:```csharp var result = await NullAsync();```
+
+</p>
+</details>
+
+---
