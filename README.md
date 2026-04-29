@@ -3268,7 +3268,7 @@ This is different from typical custom reference types, which use reference equal
 
 - A: No output (null)
 - B: Exception
-- C: Code does not complile
+- C: Code does not compile
 
 
 <details><summary><b>Answer</b></summary>
